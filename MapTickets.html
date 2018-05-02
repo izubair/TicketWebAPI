@@ -1,0 +1,418 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title></title>
+    <script src="../Scripts/WSFuncCalls.js"></script>
+
+    <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+    <link rel="stylesheet" href="assets/tether/tether.min.css">  
+    <link rel="stylesheet" href="assets/socicon/css/styles.css">
+    <link rel="stylesheet" href="assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="assets/theme/css/style.css">
+    <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+    
+   
+
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="Content/WebSiteStyles.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD9HKIXx1xm4_VIY-_oXY5EhYXZjHhnkz8"></script>
+
+</head>
+<body>
+    <nav class="navbar navbar-static-top navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-placement="bottom" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Citizen Connect</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home </a></li>
+                    <li class="active"><a href="MapTickets.html">Last 5 Requests</a></li>
+                    
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>    
+    <div class="container" style="background-color: Highlight; padding-top: 10px;">
+        <!--
+        <input type="button" title="GetData" id="GetData" style="display: none" />
+        <input type="text" id="txtData" style="display: none" />
+        -->
+        
+       
+            <div class="row" style="padding:10px">
+                <div style="float: left">
+                    <button id="btnSearch" data-toggle="popover" data-title="Search Criteria" class="tablinks" style="width: 100%">Search Criteria</button>
+                </div>
+                
+                    <button class="tablinks" style="float:right; margin-left:10px;" onclick="openTab_MapTickets(event, 'Map')" id="tabMap">Map</button>
+                    <button class="tablinks" style="float:right;" onclick="openTab_MapTickets(event, 'List')" id="tabList">List</button>
+               
+            </div>
+            <div class="row">
+
+                <div id="Map" class="tabcontent">
+                    <!--Card-->
+                    <div class="card card-cascade narrower">
+
+                        <!--Card image-->
+                        <div class="view gradient-card-header blue-gradient">
+
+                        </div>
+                        <!--/Card image-->
+                        <!--Card content-->
+                        <div class="card-body text-center">
+
+                            <!--Google map-->
+                            <div id="ticketsmap-container" class="z-depth-1"></div>
+
+                        </div>
+                        <!--/.Card content-->
+
+                    </div>
+                    <!--/.Card-->
+                </div>
+                <!--
+                <div class="col-sm-4">
+                    <h3>Column 3</h3>
+                    <p>Lorem ipsum dolor..</p>
+                    <p>Ut enim ad..</p>
+                </div>
+                    -->
+
+
+                <div id="List" class="tabcontent">
+
+                    <table id="tblTickets" class="table" cellspacing="0">
+                        <thead>
+                            <tr class="table-heads">
+
+                                <th class="head-item mbr-fonts-style display-7">TICKETS</th>
+                                <!--
+                                <th class="head-item mbr-fonts-style display-7">SUBJECT</th>
+                                <th class="head-item mbr-fonts-style display-7">DATE REPORTED</th>
+                                <th class="head-item mbr-fonts-style display-7">ISSUE</th>
+                                -->
+                            </tr>
+                        </thead>
+                        <tbody id="tblBody">
+                            <tr>
+                                <td class="body-item mbr-fonts-style display-7">
+                                    <label id="ticID">Schmal</label>
+                                    <label id="ticSubject">Jeanna Schmal</label>
+                                    <label id="ticDate">Schmal</label>
+                                    <label id="ticIssue">Schmal</label>
+                                </td>
+                                <!--
+                                <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                                <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                                <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                                -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!--List Tab content end-->
+
+                <div id="Search" class="tabcontent">
+                    <div class="row" id="test" style="padding: 4px">
+                        <form>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <label><b>Issue *</b></label>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <select name="selectIssue" id="selectIssue" style="width: 80%"></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <label><b>Details</b></label>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <select name="selectDetails" id="selectDetails" style="width: 80%" disabled></select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <label><b>Additional Information</b></label>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                        <select name="selectAddInfo" id="selectAddInfo" style="width: 80%" disabled></select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><b>Timeframe</b></label>
+                                <br />
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio1" value="2" checked="checked">2 Days</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio1" value="7">7 Days</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio1" value="30">30 Days</label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label><b>Status</b></label>
+                                <br />
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio2" value="All" checked="checked">All</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio2" value="Open">Open</label>
+                                </div>
+                                <div class="radio-inline">
+                                    <label><input type="radio" name="optradio2" value="Closed">Closed</label>
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                                <button id="btnSubmit" type="button" class="btn btn-default">Submit</button>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                                <button id="btnCancel" type="button" class="btn btn-default">Cancel</button>
+                            </div>
+                        </form>
+                       
+                    </div>
+                    <!--/Test -->
+                </div>
+            </div>
+       
+    </div>
+   
+    <footer class="navbar-default navbar-fixed-bottom footer">
+        <div class="container-fluid text-center">
+            <div class="row">
+                <p class="footer-p" style="color:white; padding-bottom: 5px">If this is a life-threatening emergency, please dial 911.</p>
+            </div>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+            <a href="#"><i class="fa fa-skype"></i></a>
+            <div class="row">
+                <p class="footer-p" style="color:white; padding-top: 5px">© Copyright 2017 Clark County - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+       
+    <script type="text/javascript">
+
+        var mapType = 1; // 1- all tickets, 2- last 5 
+        window.onload = function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            mapType = urlParams.get('MapType');
+
+            initMapForTickets();            
+         
+            if (mapType == "1")
+            {
+                $('#test').css("display", "block");
+                $('#btnSearch').css("display", "block");                   
+                getTicketData();
+                getIssues();            
+            }
+            else
+            {
+                $('#test').css("display", "none");
+                $('#btnSearch').css("display", "none");
+                getLast5TicketsData();                 
+            } 
+
+            // BS Popover
+            $("[data-toggle='popover']").popover({
+                trigger: 'manual',
+                placement: 'bottom',
+                html: true,
+                content: function () {
+                    return $('#Search').html();
+                }
+            }).click(function (e) {
+                    $('.popover').not(this).hide(); /* optional, hide other popovers */
+                    $(this).popover('show'); /* show popover now it's setup */
+                    e.preventDefault();               
+            });
+
+            
+
+            $('.container').on("change", "#selectIssue", function () {
+                selectIssueChange();
+            });
+
+            //$("#selectIssue").change(function () {
+            function selectIssueChange() {
+                //alert("Change triggered!");
+
+                var IssueId = $("#selectIssue").val();
+                var subItems = "";
+                $.ajax({
+                    url: 'api/Tickets/GetIssueDetail',
+                    type: 'GET',
+                    data: { id: IssueId },
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //alert("AJAX success!");
+                        //Fill the combo box
+                        var select = document.getElementById("selectDetails");
+                        select.innerHtml = "";
+                        var el = document.createElement("option");
+                        el.textContent = "All";
+                        el.value = 0;
+                        select.appendChild(el);
+                        var subItems;
+                        for (i = 0; i < data.length; i++) {                           
+                            subItems += "<option value='" + data[i].IssueDetailId + "'>" + data[i].Details + "</option>";                         
+                        }
+                        $("#selectDetails").html(subItems);
+
+
+                        // Also empty the additional info cb, and add All to it
+                        var addInfoSelect = document.getElementById("selectAddInfo")
+                        addInfoSelect.innerHtml = "";
+                        var el1 = document.createElement("option");
+                        el1.textContent = "All";
+                        el1.value = 0;
+                        addInfoSelect.appendChild(el1);
+
+                        $("#selectDetails").attr("disabled", false);
+                        $("#selectAddInfo").attr("disabled", true);
+                    },
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                    }
+                });
+            };
+
+            $('.container').on("change", "#selectDetails", function () {
+                selectDetailsChange();
+            });
+
+            // Issue Additional Info
+            //$("#selectDetails").change(function () {
+            function selectDetailsChange() {
+                //alert("Change triggered!");
+                var IssueId = $("#selectIssue").val();
+                var IssueDetailId = $("#selectDetails").val();
+
+                $.ajax({
+                    url: 'api/Tickets/GetIssueAddInfo',
+                    type: 'GET',
+                    data: { id: IssueId, detailId: IssueDetailId },
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //alert("AJAX success!");
+                        //Fill the combo box
+                        var select = document.getElementById("selectAddInfo");
+                        select.innerHtml = "";
+                        var el = document.createElement("option");
+                        el.textContent = "All";
+                        el.value = 0;
+                        select.appendChild(el);
+                        var subItems;
+                        for (i = 0; i < data.length; i++) {                           
+                            subItems += "<option value='" + data[i].IssueAddInfoId + "'>" + data[i].AdditionalInfo + "</option>";                         
+                        }
+                        $("#selectAddInfo").html(subItems);
+                        
+                        $("#selectAddInfo").change();
+                        $("#selectAddInfo").attr("disabled", false);
+
+                    },
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                    }
+                });
+            };
+
+            $('.container').on("click", "#btnSubmit", function () {
+                SubmitClick();
+                $(this).parents(".popover").popover('hide');
+            });
+
+            $('.container').on("click", "#btnCancel", function () {                
+                $(this).parents(".popover").popover('hide');
+            });
+
+            //$("#btnSubmit").click(function () {
+            function SubmitClick() {
+                //alert("Change triggered!");
+                var issueId = $('#selectIssue').val();
+                var issueDetailId = $('#selectDetails').val();
+                var issueAddInfoId = $('#selectAddInfo').val();
+                var DaysOld = $("input[name='optradio1']:checked").val();
+                var ticStatus = $("input[name='optradio2']:checked").val();
+                var filter = {
+                    'IssueId': '',
+                    'IssueDetailId': '',
+                    'IssueAddInfoId': '',
+                    'DaysOld': '',
+                    'TicketStatus': '1'
+                };
+
+
+                filter.IssueId = issueId;
+                filter.IssueDetailId = issueDetailId;
+                filter.IssueAddInfoId = issueAddInfoId;
+                filter.DaysOld = DaysOld;
+                filter.TicketStatus = ticStatus;
+
+                $.ajax({
+                    url: 'api/Tickets/MapFilteredTickets',
+                    type: 'POST',
+                    data: JSON.stringify(filter),
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //alert("AJAX success!");
+                        removeMarkers();
+                        addTicketMarkers(data);
+                        addTicketsToList(data);
+                        document.getElementById("tabMap").click();
+                    },
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                    }
+                });
+            };
+        };
+
+    </script>
+
+</body>
+</html>

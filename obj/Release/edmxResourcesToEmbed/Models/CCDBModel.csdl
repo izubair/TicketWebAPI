@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ServiceRequestDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Dept">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="IssueAddInfoes" Relationship="Self.FK__IssueAddI__DeptI__267ABA7A" FromRole="Depts" ToRole="IssueAddInfo" />
+    <NavigationProperty Name="IssueDetails" Relationship="Self.FK__IssueDeta__DeptI__286302EC" FromRole="Depts" ToRole="IssueDetail" />
+  </EntityType>
+  <EntityType Name="IssueAddInfo">
+    <Key>
+      <PropertyRef Name="IssueAddInfoId" />
+    </Key>
+    <Property Name="IssueAddInfoId" Type="Int32" Nullable="false" />
+    <Property Name="IssueID" Type="Int32" />
+    <Property Name="IssueDetailID" Type="Int32" />
+    <Property Name="DeptID" Type="Int32" />
+    <Property Name="AdditionalInfo" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK__IssueAddI__DeptI__267ABA7A" FromRole="IssueAddInfo" ToRole="Depts" />
+    <NavigationProperty Name="Issue" Relationship="Self.FK__IssueAddI__Issue__24927208" FromRole="IssueAddInfo" ToRole="Issues" />
+    <NavigationProperty Name="IssueDetail" Relationship="Self.FK__IssueAddI__Issue__25869641" FromRole="IssueAddInfo" ToRole="IssueDetail" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__IssueAd__2D27B809" FromRole="IssueAddInfo" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="IssueDetail">
+    <Key>
+      <PropertyRef Name="IssueDetailId" />
+    </Key>
+    <Property Name="IssueDetailId" Type="Int32" Nullable="false" />
+    <Property Name="IssueID" Type="Int32" />
+    <Property Name="DeptID" Type="Int32" />
+    <Property Name="Details" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Dept" Relationship="Self.FK__IssueDeta__DeptI__286302EC" FromRole="IssueDetail" ToRole="Depts" />
+    <NavigationProperty Name="IssueAddInfoes" Relationship="Self.FK__IssueAddI__Issue__25869641" FromRole="IssueDetail" ToRole="IssueAddInfo" />
+    <NavigationProperty Name="Issue" Relationship="Self.FK__IssueDeta__Issue__276EDEB3" FromRole="IssueDetail" ToRole="Issues" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__IssueDe__2C3393D0" FromRole="IssueDetail" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="Issue">
+    <Key>
+      <PropertyRef Name="IssueId" />
+    </Key>
+    <Property Name="IssueId" Type="Int32" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="IssueAddInfoes" Relationship="Self.FK__IssueAddI__Issue__24927208" FromRole="Issues" ToRole="IssueAddInfo" />
+    <NavigationProperty Name="IssueDetails" Relationship="Self.FK__IssueDeta__Issue__276EDEB3" FromRole="Issues" ToRole="IssueDetail" />
+    <NavigationProperty Name="Tickets" Relationship="Self.FK__Tickets__IssueId__2B3F6F97" FromRole="Issues" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="TicketLocAdditional">
+    <Key>
+      <PropertyRef Name="TicketLocAddId" />
+    </Key>
+    <Property Name="TicketLocAddId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TicketId" Type="Int32" />
+    <Property Name="JurisdictionCode" Type="Int32" Nullable="false" />
+    <Property Name="MinorCivilDiv" Type="Int32" Nullable="false" />
+    <Property Name="StateAssembly" Type="Int32" Nullable="false" />
+    <Property Name="StateSenate" Type="Int32" Nullable="false" />
+    <Property Name="CityWard" Type="Int32" Nullable="false" />
+    <Property Name="CommissionDist" Type="Int32" Nullable="false" />
+    <Property Name="Commissioner" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Ticket" Relationship="Self.FK__TicketLoc__Ticke__29572725" FromRole="TicketLocAdditional" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="TicketLocation">
+    <Key>
+      <PropertyRef Name="TicketLocId" />
+    </Key>
+    <Property Name="TicketLocId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TicketId" Type="Int32" />
+    <Property Name="Latitude" Type="Double" Nullable="false" />
+    <Property Name="Longitude" Type="Double" Nullable="false" />
+    <Property Name="HouseNo" Type="Int32" />
+    <Property Name="Street" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="City" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="State" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PostalCode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Country" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ParcelNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CrossSt1" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CrossSt2" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ticket" Relationship="Self.FK__TicketLoc__Ticke__2A4B4B5E" FromRole="TicketLocation" ToRole="Tickets" />
+  </EntityType>
+  <EntityType Name="Ticket">
+    <Key>
+      <PropertyRef Name="TicketId" />
+    </Key>
+    <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Subject" Type="String" MaxLength="132" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ConstituentID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="Service" Type="Int32" Nullable="false" />
+    <Property Name="IssueId" Type="Int32" />
+    <Property Name="IssueDetailId" Type="Int32" />
+    <Property Name="IssueAddInfoId" Type="Int32" />
+    <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="DateReported" Type="DateTime" Precision="0" />
+    <Property Name="TimeReported" Type="Time" Precision="7" />
+    <Property Name="TicketStatus" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="IssueAddInfo" Relationship="Self.FK__Tickets__IssueAd__2D27B809" FromRole="Tickets" ToRole="IssueAddInfo" />
+    <NavigationProperty Name="IssueDetail" Relationship="Self.FK__Tickets__IssueDe__2C3393D0" FromRole="Tickets" ToRole="IssueDetail" />
+    <NavigationProperty Name="Issue" Relationship="Self.FK__Tickets__IssueId__2B3F6F97" FromRole="Tickets" ToRole="Issues" />
+    <NavigationProperty Name="TicketLocAdditionals" Relationship="Self.FK__TicketLoc__Ticke__29572725" FromRole="Tickets" ToRole="TicketLocAdditional" />
+    <NavigationProperty Name="TicketLocations" Relationship="Self.FK__TicketLoc__Ticke__2A4B4B5E" FromRole="Tickets" ToRole="TicketLocation" />
+  </EntityType>
+  <Association Name="FK__IssueAddI__DeptI__267ABA7A">
+    <End Role="Depts" Type="Self.Dept" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Depts">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="DeptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueDeta__DeptI__286302EC">
+    <End Role="Depts" Type="Self.Dept" Multiplicity="0..1" />
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Depts">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="IssueDetail">
+        <PropertyRef Name="DeptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueAddI__Issue__24927208">
+    <End Role="Issues" Type="Self.Issue" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="IssueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueAddI__Issue__25869641">
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueDetail">
+        <PropertyRef Name="IssueDetailId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="IssueDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueAd__2D27B809">
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueAddInfo">
+        <PropertyRef Name="IssueAddInfoId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueAddInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueDeta__Issue__276EDEB3">
+    <End Role="Issues" Type="Self.Issue" Multiplicity="0..1" />
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="IssueDetail">
+        <PropertyRef Name="IssueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueDe__2C3393D0">
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueDetail">
+        <PropertyRef Name="IssueDetailId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueId__2B3F6F97">
+    <End Role="Issues" Type="Self.Issue" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TicketLoc__Ticke__29572725">
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TicketLocAdditional" Type="Self.TicketLocAdditional" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicketLocAdditional">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TicketLoc__Ticke__2A4B4B5E">
+    <End Role="Tickets" Type="Self.Ticket" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TicketLocation" Type="Self.TicketLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicketLocation">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ServiceRequestDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Depts" EntityType="Self.Dept" />
+    <EntitySet Name="IssueAddInfoes" EntityType="Self.IssueAddInfo" />
+    <EntitySet Name="IssueDetails" EntityType="Self.IssueDetail" />
+    <EntitySet Name="Issues" EntityType="Self.Issue" />
+    <EntitySet Name="TicketLocAdditionals" EntityType="Self.TicketLocAdditional" />
+    <EntitySet Name="TicketLocations" EntityType="Self.TicketLocation" />
+    <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+    <AssociationSet Name="FK__IssueAddI__DeptI__267ABA7A" Association="Self.FK__IssueAddI__DeptI__267ABA7A">
+      <End Role="Depts" EntitySet="Depts" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueDeta__DeptI__286302EC" Association="Self.FK__IssueDeta__DeptI__286302EC">
+      <End Role="Depts" EntitySet="Depts" />
+      <End Role="IssueDetail" EntitySet="IssueDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueAddI__Issue__24927208" Association="Self.FK__IssueAddI__Issue__24927208">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueAddI__Issue__25869641" Association="Self.FK__IssueAddI__Issue__25869641">
+      <End Role="IssueDetail" EntitySet="IssueDetails" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfoes" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueAd__2D27B809" Association="Self.FK__Tickets__IssueAd__2D27B809">
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfoes" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueDeta__Issue__276EDEB3" Association="Self.FK__IssueDeta__Issue__276EDEB3">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="IssueDetail" EntitySet="IssueDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueDe__2C3393D0" Association="Self.FK__Tickets__IssueDe__2C3393D0">
+      <End Role="IssueDetail" EntitySet="IssueDetails" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueId__2B3F6F97" Association="Self.FK__Tickets__IssueId__2B3F6F97">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TicketLoc__Ticke__29572725" Association="Self.FK__TicketLoc__Ticke__29572725">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketLocAdditional" EntitySet="TicketLocAdditionals" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TicketLoc__Ticke__2A4B4B5E" Association="Self.FK__TicketLoc__Ticke__2A4B4B5E">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketLocation" EntitySet="TicketLocations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

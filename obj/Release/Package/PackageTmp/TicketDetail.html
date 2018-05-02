@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 id="ticketID" class="modal-title">TicketID</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Ticket details</p>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Subject: </b></label>
+                                <span id="ticketSubject" style="width: 80%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Description: </b></label>
+                                <span id="ticketDesc" style="width: 80%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Issue: </b></label>
+                                <span id="ticketIssue" style="width: 80%"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                                <label><b>Date Reported: </b></label>
+                                <span id="ticketDate" style="width: 80%"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--End Modal-->
+
+       
+    </div>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+       var uri = 'api/Tickets/GetTickets';
+        $(document).ready(function () {
+            // Get id passed to page as parameter
+            var urlParams = new URLSearchParams(window.location.search);
+            var id = urlParams.get('ID');
+
+
+            $.getJSON('api/Tickets/GetTicket' + '/' + id)
+                .done(function (data) {
+                    //$('#ticket').text(formatItem(data));
+
+                    $('#ticketID').text('TicketId: ' + data.TicketId);
+
+                    $('#ticketSubject').text(data.Subject);
+                    $('#ticketDesc').text(data.Description);
+                    $('#ticketIssue').text(data.IssueId);
+                    $('#ticketDate').text(data.DateReported);
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#ticket').text('Error: ' + err);
+                });
+        });
+
+        function formatItem(item) {
+            return item.TicketId + ': ' + item.Subject + " - " + item.DateReported;
+        }
+
+    </script>
+
+</body>
+</html>

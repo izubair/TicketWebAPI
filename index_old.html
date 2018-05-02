@@ -1,0 +1,88 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Tickets App</title>
+</head>
+<body>
+
+    <div>
+        <h2>All Tickets</h2>
+        <ul id="Tickets" />
+    </div>
+    <div>
+        <h2>Search by ID</h2>
+        <input type="text" id="TicketId" size="5" />
+        <input type="button" value="Search" onclick="find();" />
+        <p id="ticket" />
+    </div>
+    <div>
+        <input type="button" value="Add Ticket" onclick="addTicket();" />
+    </div>
+    <div>
+        <a href="TicketsList.html">Tickets List</a>
+    </div>
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <script>
+    var uri = 'api/Tickets/GetTickets';
+
+    $(document).ready(function () {
+      // Send an AJAX request
+      $.getJSON(uri)
+          .done(function (data) {
+            // On success, 'data' contains a list of products.
+              for (i = 0; i < data.length; i++)
+              {
+                  // Add a list item for the product.
+                  $('<li>', { text: formatItem(data[i]) }).appendTo($('#Tickets'));
+              }            
+          });
+    });
+
+    function formatItem(item) {
+      return item.TicketId + ': ' + item.Subject + " - " +item.DateReported;
+    }
+
+    function find() {
+        var id = $('#TicketId').val();
+        $.getJSON('api/Tickets/GetTicket' + '/' + id)
+          .done(function (data) {
+            $('#ticket').text(formatItem(data));
+          })
+          .fail(function (jqXHR, textStatus, err) {
+            $('#ticket').text('Error: ' + err);
+          });
+        }
+
+        function addTicket() {
+            var addUri = 'api/Tickets/PostTicket';
+            var uTicket = {
+                    'Subject': 'Test Ticket add',
+                    'ConstituentID': '1',
+                    'Service': '1',
+                    'IssueId': '1',
+                    'IssueDetailId': '1',
+                    'IssueAddInfoId': '1',
+                    'Description': 'desc',
+                    'DateReported': '20171215',
+                    'TimeReported': '00:00',
+                    'TicketStatus': '1'
+                
+            };
+
+            
+            $.ajax({
+                type: "POST",
+                url: addUri,
+                data: JSON.stringify(uTicket),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    alert("Ticket has been added successfully.");
+                    window.location.reload();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

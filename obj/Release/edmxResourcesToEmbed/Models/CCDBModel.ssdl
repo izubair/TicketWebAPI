@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ServiceRequestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Depts">
+    <Key>
+      <PropertyRef Name="DeptId" />
+    </Key>
+    <Property Name="DeptId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="IssueAddInfo">
+    <Key>
+      <PropertyRef Name="IssueAddInfoId" />
+    </Key>
+    <Property Name="IssueAddInfoId" Type="int" Nullable="false" />
+    <Property Name="IssueID" Type="int" />
+    <Property Name="IssueDetailID" Type="int" />
+    <Property Name="DeptID" Type="int" />
+    <Property Name="AdditionalInfo" Type="varchar" MaxLength="256" />
+  </EntityType>
+  <EntityType Name="IssueDetail">
+    <Key>
+      <PropertyRef Name="IssueDetailId" />
+    </Key>
+    <Property Name="IssueDetailId" Type="int" Nullable="false" />
+    <Property Name="IssueID" Type="int" />
+    <Property Name="DeptID" Type="int" />
+    <Property Name="Details" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Issues">
+    <Key>
+      <PropertyRef Name="IssueId" />
+    </Key>
+    <Property Name="IssueId" Type="int" Nullable="false" />
+    <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketLocAdditional">
+    <Key>
+      <PropertyRef Name="TicketLocAddId" />
+    </Key>
+    <Property Name="TicketLocAddId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" />
+    <Property Name="JurisdictionCode" Type="int" Nullable="false" />
+    <Property Name="MinorCivilDiv" Type="int" Nullable="false" />
+    <Property Name="StateAssembly" Type="int" Nullable="false" />
+    <Property Name="StateSenate" Type="int" Nullable="false" />
+    <Property Name="CityWard" Type="int" Nullable="false" />
+    <Property Name="CommissionDist" Type="int" Nullable="false" />
+    <Property Name="Commissioner" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicketLocation">
+    <Key>
+      <PropertyRef Name="TicketLocId" />
+    </Key>
+    <Property Name="TicketLocId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" />
+    <Property Name="Latitude" Type="float" Nullable="false" />
+    <Property Name="Longitude" Type="float" Nullable="false" />
+    <Property Name="HouseNo" Type="int" />
+    <Property Name="Street" Type="varchar" MaxLength="60" />
+    <Property Name="City" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="State" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PostalCode" Type="varchar" MaxLength="30" />
+    <Property Name="Country" Type="varchar" MaxLength="60" />
+    <Property Name="Location" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="ParcelNo" Type="varchar" MaxLength="30" />
+    <Property Name="CrossSt1" Type="varchar" MaxLength="30" />
+    <Property Name="CrossSt2" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="Tickets">
+    <Key>
+      <PropertyRef Name="TicketId" />
+    </Key>
+    <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Subject" Type="varchar" MaxLength="132" Nullable="false" />
+    <Property Name="ConstituentID" Type="nvarchar" MaxLength="128" />
+    <Property Name="Service" Type="int" Nullable="false" />
+    <Property Name="IssueId" Type="int" />
+    <Property Name="IssueDetailId" Type="int" />
+    <Property Name="IssueAddInfoId" Type="int" />
+    <Property Name="Description" Type="varchar" MaxLength="256" Nullable="false" />
+    <Property Name="DateReported" Type="date" />
+    <Property Name="TimeReported" Type="time" Precision="7" />
+    <Property Name="TicketStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__IssueAddI__DeptI__267ABA7A">
+    <End Role="Depts" Type="Self.Depts" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Depts">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="DeptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueAddI__Issue__24927208">
+    <End Role="Issues" Type="Self.Issues" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="IssueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueAddI__Issue__25869641">
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="0..1" />
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueDetail">
+        <PropertyRef Name="IssueDetailId" />
+      </Principal>
+      <Dependent Role="IssueAddInfo">
+        <PropertyRef Name="IssueDetailID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueDeta__DeptI__286302EC">
+    <End Role="Depts" Type="Self.Depts" Multiplicity="0..1" />
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Depts">
+        <PropertyRef Name="DeptId" />
+      </Principal>
+      <Dependent Role="IssueDetail">
+        <PropertyRef Name="DeptID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__IssueDeta__Issue__276EDEB3">
+    <End Role="Issues" Type="Self.Issues" Multiplicity="0..1" />
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="IssueDetail">
+        <PropertyRef Name="IssueID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TicketLoc__Ticke__29572725">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TicketLocAdditional" Type="Self.TicketLocAdditional" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicketLocAdditional">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TicketLoc__Ticke__2A4B4B5E">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="TicketLocation" Type="Self.TicketLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicketLocation">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueAd__2D27B809">
+    <End Role="IssueAddInfo" Type="Self.IssueAddInfo" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueAddInfo">
+        <PropertyRef Name="IssueAddInfoId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueAddInfoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueDe__2C3393D0">
+    <End Role="IssueDetail" Type="Self.IssueDetail" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="IssueDetail">
+        <PropertyRef Name="IssueDetailId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueDetailId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Tickets__IssueId__2B3F6F97">
+    <End Role="Issues" Type="Self.Issues" Multiplicity="0..1" />
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Issues">
+        <PropertyRef Name="IssueId" />
+      </Principal>
+      <Dependent Role="Tickets">
+        <PropertyRef Name="IssueId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ServiceRequestDBModelStoreContainer">
+    <EntitySet Name="Depts" EntityType="Self.Depts" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IssueAddInfo" EntityType="Self.IssueAddInfo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IssueDetail" EntityType="Self.IssueDetail" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Issues" EntityType="Self.Issues" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketLocAdditional" EntityType="Self.TicketLocAdditional" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicketLocation" EntityType="Self.TicketLocation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__IssueAddI__DeptI__267ABA7A" Association="Self.FK__IssueAddI__DeptI__267ABA7A">
+      <End Role="Depts" EntitySet="Depts" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueAddI__Issue__24927208" Association="Self.FK__IssueAddI__Issue__24927208">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueAddI__Issue__25869641" Association="Self.FK__IssueAddI__Issue__25869641">
+      <End Role="IssueDetail" EntitySet="IssueDetail" />
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueDeta__DeptI__286302EC" Association="Self.FK__IssueDeta__DeptI__286302EC">
+      <End Role="Depts" EntitySet="Depts" />
+      <End Role="IssueDetail" EntitySet="IssueDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__IssueDeta__Issue__276EDEB3" Association="Self.FK__IssueDeta__Issue__276EDEB3">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="IssueDetail" EntitySet="IssueDetail" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TicketLoc__Ticke__29572725" Association="Self.FK__TicketLoc__Ticke__29572725">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketLocAdditional" EntitySet="TicketLocAdditional" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TicketLoc__Ticke__2A4B4B5E" Association="Self.FK__TicketLoc__Ticke__2A4B4B5E">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicketLocation" EntitySet="TicketLocation" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueAd__2D27B809" Association="Self.FK__Tickets__IssueAd__2D27B809">
+      <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueDe__2C3393D0" Association="Self.FK__Tickets__IssueDe__2C3393D0">
+      <End Role="IssueDetail" EntitySet="IssueDetail" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Tickets__IssueId__2B3F6F97" Association="Self.FK__Tickets__IssueId__2B3F6F97">
+      <End Role="Issues" EntitySet="Issues" />
+      <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

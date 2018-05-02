@@ -1,0 +1,174 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Select Location</title>
+    <script src="../Scripts/WSFuncCalls.js"></script>
+
+   
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="Content/WebSiteStyles.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD9HKIXx1xm4_VIY-_oXY5EhYXZjHhnkz8"></script>
+
+    
+
+</head>
+<body>
+   
+    <!--
+    <div class="page-header text-center">
+        <h3>Select Location</h3>
+        <p>Select Location Address, Cross Streets or Parcel Number and enter required data or click (Drop pin) on map to select location</p>
+    </div>
+    -->
+    <nav class="navbar navbar-static-top navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Citizen Connect</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home </a></li>
+                    <li><a href="MapTickets.html">Last 5 Requests</a></li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <h3 style="text-align:center">Select Location</h3>
+    <div class="container">          
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="tab">
+                    <button class="tablinks" onclick="openTab(event, 'Address')" id="tabAddress">Address</button>
+                    <button class="tablinks" onclick="openTab(event, 'CrossStreets')" id="tabCrossStreets">Cross Streets</button>
+                    <button class="tablinks" onclick="openTab(event, 'Parcel')" id="tabParcel">Parcel</button>
+
+                </div>
+                <div id="Address" class="tabcontent">                    
+                    <label>Address:</label>
+                    <br />
+                    <input id="AddressText" name="LocAddress" class="user-input">
+                    <br />
+                    <br />
+                    <label><b>Results:</b></label>
+                    <br />
+                    <div id="ResultText" contenteditable="false"></div>
+                </div>
+                <div id="CrossStreets" class="tabcontent">                    
+                    <label>Cross Street 1:</label>
+                    <br />
+                    <input id="CrossStreet1Text" class="user-input">
+                    <br />
+                    <label id="crossstreet2Label">Cross Street 2:</label>
+                    <br />
+                    <input id="CrossStreet2Text" class="user-input">
+                    <br />
+                    <br />
+                    <label><b>Results:</b></label>
+                    <br />
+                    <div id="Result1Text" contenteditable="false"></div>
+                </div>
+                <div id="Parcel" class="tabcontent">
+                    <form>                        
+                        <label>Parcel number:</label>
+                        <br />
+                        <input type="text" id="ParcelText" class="user-input">
+                        <br />
+                        <br />
+                        <label><b>Results:</b></label>
+                        <br />
+                        <div id="Result2Text" contenteditable="false"></div>
+                    </form>
+                </div>
+
+                <!-- Within first row -->
+                <div class="row" style="padding:10px">
+                    <div class="col-sm-6">
+                        <button type="button" id="BtnDone" class="btn btn-primary" style="width:100%"> DONE </button>
+                    </div>
+                    <div class="col-sm-6">
+                        <button type="button" id="BtnCancel" class="btn btn-primary pull-right" style="width:100%">CANCEL</button>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-sm-8">
+                <!--Card-->
+                <div class="card card-cascade narrower">
+
+                    <!--Card image-->
+                    <div class="view gradient-card-header blue-gradient">
+
+                    </div>
+                    <!--/Card image-->
+                    <!--Card content-->
+                    <div class="card-body text-center">
+
+                        <!--Google map-->
+                        <div id="map-container" class="z-depth-1"></div>
+
+                    </div>
+                    <!--/.Card content-->
+
+                </div>
+                <!--/.Card-->
+            </div>
+            <!--
+            <div class="col-sm-4">
+              <h3>Column 3</h3>
+              <p>Lorem ipsum dolor..</p>
+              <p>Ut enim ad..</p>
+            </div>
+                -->
+        </div>
+    </div>
+    <footer class="navbar-default  footer">
+        <div class="container-fluid text-center">
+            <div class="row">
+                <label style="color:white; padding-bottom: 5px">&nbsp; &nbsp; &nbsp; &nbsp;If this is a life-threatening emergency, please dial 911. &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+            </div>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+            <a href="#"><i class="fa fa-skype"></i></a>
+            <div class="row">
+                <label style="color:white; padding-top: 5px">&nbsp; &nbsp; &nbsp; &nbsp;© Copyright 2017 Clark County - All Rights Reserved &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;</label>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+    window.onload = function () {
+        initMap();
+    };
+    </script>
+</body>
+</html>

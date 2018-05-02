@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ServiceRequestDBModelStoreContainer" CdmEntityContainer="ServiceRequestDBEntities">
+    <EntitySetMapping Name="Depts">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.Dept">
+        <MappingFragment StoreEntitySet="Depts">
+          <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IssueAddInfoes">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.IssueAddInfo">
+        <MappingFragment StoreEntitySet="IssueAddInfo">
+          <ScalarProperty Name="IssueAddInfoId" ColumnName="IssueAddInfoId" />
+          <ScalarProperty Name="IssueID" ColumnName="IssueID" />
+          <ScalarProperty Name="IssueDetailID" ColumnName="IssueDetailID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="AdditionalInfo" ColumnName="AdditionalInfo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="IssueDetails">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.IssueDetail">
+        <MappingFragment StoreEntitySet="IssueDetail">
+          <ScalarProperty Name="IssueDetailId" ColumnName="IssueDetailId" />
+          <ScalarProperty Name="IssueID" ColumnName="IssueID" />
+          <ScalarProperty Name="DeptID" ColumnName="DeptID" />
+          <ScalarProperty Name="Details" ColumnName="Details" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Issues">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.Issue">
+        <MappingFragment StoreEntitySet="Issues">
+          <ScalarProperty Name="IssueId" ColumnName="IssueId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TicketLocAdditionals">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.TicketLocAdditional">
+        <MappingFragment StoreEntitySet="TicketLocAdditional">
+          <ScalarProperty Name="TicketLocAddId" ColumnName="TicketLocAddId" />
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="JurisdictionCode" ColumnName="JurisdictionCode" />
+          <ScalarProperty Name="MinorCivilDiv" ColumnName="MinorCivilDiv" />
+          <ScalarProperty Name="StateAssembly" ColumnName="StateAssembly" />
+          <ScalarProperty Name="StateSenate" ColumnName="StateSenate" />
+          <ScalarProperty Name="CityWard" ColumnName="CityWard" />
+          <ScalarProperty Name="CommissionDist" ColumnName="CommissionDist" />
+          <ScalarProperty Name="Commissioner" ColumnName="Commissioner" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TicketLocations">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.TicketLocation">
+        <MappingFragment StoreEntitySet="TicketLocation">
+          <ScalarProperty Name="TicketLocId" ColumnName="TicketLocId" />
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+          <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+          <ScalarProperty Name="HouseNo" ColumnName="HouseNo" />
+          <ScalarProperty Name="Street" ColumnName="Street" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="PostalCode" ColumnName="PostalCode" />
+          <ScalarProperty Name="Country" ColumnName="Country" />
+          <ScalarProperty Name="Location" ColumnName="Location" />
+          <ScalarProperty Name="ParcelNo" ColumnName="ParcelNo" />
+          <ScalarProperty Name="CrossSt1" ColumnName="CrossSt1" />
+          <ScalarProperty Name="CrossSt2" ColumnName="CrossSt2" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tickets">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.Ticket">
+        <MappingFragment StoreEntitySet="Tickets">
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="ConstituentID" ColumnName="ConstituentID" />
+          <ScalarProperty Name="Service" ColumnName="Service" />
+          <ScalarProperty Name="IssueId" ColumnName="IssueId" />
+          <ScalarProperty Name="IssueDetailId" ColumnName="IssueDetailId" />
+          <ScalarProperty Name="IssueAddInfoId" ColumnName="IssueAddInfoId" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="DateReported" ColumnName="DateReported" />
+          <ScalarProperty Name="TimeReported" ColumnName="TimeReported" />
+          <ScalarProperty Name="TicketStatus" ColumnName="TicketStatus" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

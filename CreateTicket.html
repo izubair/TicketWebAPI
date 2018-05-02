@@ -1,0 +1,319 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title></title>
+    <script src="../Scripts/WSFuncCalls.js"></script>
+
+   
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="Content/WebSiteStyles.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Citizen Connect</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="MapTickets.html">Last 5 Requests</a></li>
+
+                </ul>
+                <!--
+                 <ul class="nav navbar-nav navbar-right">
+                     <li><a href="#">Link</a></li>
+                     <li class="dropdown">
+                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                         <ul class="dropdown-menu">
+                             <li><a href="#">Action</a></li>
+                             <li><a href="#">Another action</a></li>
+                             <li><a href="#">Something else here</a></li>
+                             <li role="separator" class="divider"></li>
+                             <li><a href="#">Separated link</a></li>
+                         </ul>
+                     </li>
+                 </ul>
+                 -->
+
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!-- To aligh horizontally use margin:auto -->
+    <div class="container" style="background-color:Highlight; padding: 20px; padding-top: 50px; margin: auto;" >
+        
+        <form>            
+            <div class="form">               
+            
+                <div class="form-group">
+                    <h4 style="text-align:left">Create Request</h4>
+
+                    <label for="email">Subject:</label>
+                    <input class="form-control form-control-sm" type="text" id="subject">
+               
+                        <label for="IssueId">Issue:</label>
+                        <select class="form-control" id="IssueId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+              
+                        <label for="IssueDetailId">Detail:</label>
+                        <select class="form-control form-control-sm" id="IssueDetailId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+
+                        <label for="IssueAddInfoId">Additional Information:</label>
+                        <select class="form-control form-control-sm" id="IssueAddInfoId">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+
+                        <label for="description">Description:</label>
+                        <textarea class="form-control form-control-sm" rows="2" id="description"></textarea>
+                    </div>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <input id="btnCreate" type="button" value="Create" />
+                    </div>
+
+                    <div class="col-sm-4">
+                        <a href="TicketsList.html" class="right-btn">Back to list</a>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <a href="AttachFile.html" class="right-btn">Attach files...</a>
+                    </div>
+               </div>
+
+        </form>
+
+       
+    </div>
+    
+    <footer class="navbar-default navbar-fixed-bottom footer">
+        
+        <div class="container-fluid text-center">
+            <div class="row">
+                <p class="footer-p" style="padding-bottom: 5px">If this is a life-threatening emergency, please dial 911.</p>  
+            </div>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+            <a href="#"><i class="fa fa-skype"></i></a>
+            <div class="row">
+                <p class="footer-p" style="padding-top: 5px">© Copyright 2017 Clark County - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script type="text/javascript">
+        var ticketType = 1;
+    $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            ticketType = urlParams.get('Type');
+            getIssues();
+
+            $('#btnCreate').click(function () {
+                addTicket();
+            });
+
+        $("#IssueId").change(function () {
+            //alert("Change triggered!");
+
+            var IssueId = $(this).val();
+            var subItems = "";
+            $.ajax({
+                url: 'api/Tickets/GetIssueDetail',
+                type: 'GET',
+                data: { id: IssueId },
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    var subItems;
+                    for (i = 0; i < data.length; i++) {
+                        //$.each(data, function (index, item) {
+                        subItems += "<option value='" + data[i].IssueDetailId + "'>" + data[i].Details + "</option>";
+                        //});
+                    }
+                    $("#IssueDetailId").html(subItems);
+                    //if (subItems.length > 1) {
+                        //$("#IssueDetailId").change();
+                    //$("#IssueDetailId").removeAttr("disabled");
+                    $("#IssueDetailId").attr("disabled", false);
+                    $("#IssueAddInfoId").html("");
+                    $("#IssueAddInfoId").attr("disabled", true);
+                    //}
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        });
+
+        // Issue Additional Info
+        $("#IssueDetailId").change(function () {
+            //alert("Change triggered!");
+            var IssueId = $("#IssueId").val();
+            var IssueDetailId = $(this).val();
+            var subItems = "";
+            $.ajax({
+                url: 'api/Tickets/GetIssueAddInfo',
+                type: 'GET',
+                data: { id: IssueId, detailId: IssueDetailId },
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    var subItems;
+                    for (i = 0; i < data.length; i++) {
+                        //$.each(data, function (index, item) {
+                        subItems += "<option value='" + data[i].IssueAddInfoId + "'>" + data[i].AdditionalInfo + "</option>";
+                        //});
+                    }
+                    $("#IssueAddInfoId").html(subItems);
+                    //if (subItems.length > 1) {
+                    //{
+                        $("#IssueAddInfoId").change();
+                        $("#IssueAddInfoId").attr("disabled", false);
+                    //}
+
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        });
+
+        function getIssues() {
+            $.ajax({
+                url: 'api/Tickets/GetIssues',
+                type: 'GET',               
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    var subItems;
+                    for (i = 0; i < data.length; i++) {
+                        //$.each(data, function (index, item) {
+                        subItems += "<option value='" + data[i].IssueId + "'>" + data[i].Description + "</option>";
+                        //});
+                    }
+                    $("#IssueId").html(subItems);                   
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+            });
+        }
+
+        function addTicket() {
+            var subject = $('#subject').val();
+            var issueId = $('#IssueId').val();
+            var issueDetailId = $('#IssueDetailId').val();
+            var issueAddInfoId = $('#IssueAddInfoId').val();
+            var desc = $('#description').val();
+            var dateReported = new Date().getDate;
+            var timeReported = new Date().getTime;
+
+            var addUri = 'api/Tickets/PostTicket';
+            var uTicket = {
+                'Subject': '',
+                'ConstituentID': '1',
+                'Service': '',
+                'IssueId': '',
+                'IssueDetailId': '',
+                'IssueAddInfoId': '',
+                'Description': '',
+                'DateReported': '',
+                'TimeReported': '',
+                'TicketStatus': '1',
+                'TicketType': ''
+            };
+
+            uTicket.Subject = subject;
+            uTicket.IssueId = issueId;
+            uTicket.IssueDetailId = issueDetailId;
+            uTicket.IssueAddInfoId = issueAddInfoId;
+            uTicket.Description = desc;
+            uTicket.DateReported = dateReported;
+            uTicket.TimeReported = timeReported;
+            uTicket.TicketType = ticketType;
+
+            $.ajax({
+                type: "POST",
+                url: addUri,
+                data: JSON.stringify(uTicket),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    //alert("AJAX success!");
+                    if (data === "OK") {
+                        var url = "TicketsList.html"; //?" + queryStr;
+                        window.location.href = url;
+                    }
+                    else {
+                        alert("Something went wrong in call to set ticket data");
+                    }
+
+                    //}
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
+                //success: function (response) {
+                //    alert("Ticket has been added successfully.");
+                //    //window.location.reload();
+                //    window.location.href = 'TicketsList.html'; 
+                //}
+            });
+        }
+    });
+    </script>
+</body>
+</html>

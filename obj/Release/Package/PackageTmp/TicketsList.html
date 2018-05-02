@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html >
+<head>
+  <!-- Site made with Mobirise Website Builder v4.5.2, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v4.5.2, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+  <link rel="shortcut icon" href="assets/images/mbr-1620x1080.jpg" type="image/x-icon">
+  <meta name="description" content="Site Maker Description">
+  <title>TicketsList</title>
+    <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
+    <link rel="stylesheet" href="assets/tether/tether.min.css">
+    <link rel="stylesheet" href="assets/socicon/css/styles.css">
+    <link rel="stylesheet" href="assets/dropdown/css/style.css">
+    <link rel="stylesheet" href="assets/theme/css/style.css">
+    <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="Content/WebSiteStyles.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+   
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 id="ticketID" class="modal-title">TicketID</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Ticket details</p>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label><b>Subject: </b></label>
+                            <span id="ticketSubject" style="width: 80%"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label><b>Description: </b></label>
+                            <span id="ticketDesc" style="width: 80%"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label><b>Issue: </b></label>
+                            <span id="ticketIssue" style="width: 80%"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label><b>Date Reported: </b></label>
+                            <span id="ticketDate" style="width: 80%"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!--End Modal-->
+
+    <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Citizen Connect</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="index.html">Home <span class="sr-only">(current)</span></a></li>
+                    <li><a href="MapTickets.html">Last 5 Requests</a></li>
+
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
+
+<section class="section-table cid-qEbtNj9Ayd" id="table1-d" data-rv-view="1081">
+
+  
+  
+  <div class="container container-table">
+      <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Citizen Requests</h2>      
+      <div class="table-wrapper">
+        <div class="container">
+          <div class="row search">
+            <div class="col-md-6"></div>
+            <!--
+            <div class="col-md-6">
+                <div class="dataTables_filter">
+                  <label class="searchInfo mbr-fonts-style display-7">Search:</label>
+                  <input class="form-control input-sm" disabled="">
+                </div>
+            </div>
+            -->
+          </div>
+        </div>
+
+        <div class="container scroll">
+        <!--
+          <table id="tblTickets" class="table isSearch" cellspacing="0">
+        -->
+            <table id="tblTickets" class="table" cellspacing="0">
+                <thead>
+                    <tr class="table-heads">
+
+                        <th class="head-item mbr-fonts-style display-7">TICKETS</th>
+                        <!--                        
+                        <th class="head-item mbr-fonts-style display-7">SUBJECT</th>
+                        <th class="head-item mbr-fonts-style display-7">DATE REPORTED</th>
+                        <th class="head-item mbr-fonts-style display-7">ISSUE</th>
+                        -->
+                    </tr>
+                </thead>
+                <tbody id="tblBody">
+                    <tr>
+                        <td class="body-item mbr-fonts-style display-7">
+                        <label id="ticID">Schmal</label> 
+                        <label id="ticSubject">Jeanna Schmal</label> 
+                        <label id="ticDate">Schmal</label>
+                        <label id="ticIssue">Schmal</label>
+                        </td>
+                        <!--
+                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
+                        -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         
+          <div id="tblInfo" class="container table-info-container">
+              <div class="row info">
+                  <div class="col-md-6">
+                      <div class="dataTables_info mbr-fonts-style display-7">
+                          <span class="infoBefore">Showing</span>                         
+                          <span id="spanInfoRows"></span>                         
+                          <span class="infoAfter">entries</span>
+                          <span class="infoFilteredBefore">(filtered from</span>
+                          <span class="inactive infoRows"></span>
+                          <span class="infoFilteredAfter">total entries)</span>
+                      </div>
+                  </div>
+                  <div class="col-md-6"></div>
+              </div>
+          </div>
+       
+
+      </div>
+      
+           
+    </div>
+</section>
+
+    <footer class="navbar-default navbar-fixed-bottom footer">
+
+        <div class="container-fluid text-center">
+            <div class="row">
+                <p class="footer-p" style="padding-bottom: 5px">If this is a life-threatening emergency, please dial 911.</p>
+            </div>
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-linkedin"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+            <a href="#"><i class="fa fa-skype"></i></a>
+            <div class="row">
+                <p class="footer-p" style="padding-top: 5px">© Copyright 2017 Clark County - All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript">
+       var uri = 'api/Tickets/GetTickets';
+        $(document).ready(function () {
+            $('#tblTickets:has(td)').click(function (e) {
+                var currentRow = $(e.target).closest("tr");
+                var col1 = currentRow.find("td:eq(0)"); // get current row 1st TD value
+                var labelEl = col1.find('.lbl');
+
+                console.log("" + labelEl.text());
+                
+                var id = labelEl.text();
+
+                $.getJSON('api/Tickets/GetTicket' + '/' + id)
+                    .done(function (data) {
+                        //$('#ticket').text(formatItem(data));
+
+                        $('#ticketID').text('Ticket ID: ' + data.TicketId);
+
+                        $('#ticketSubject').text(data.Subject);
+                        $('#ticketDesc').text(data.Description);
+                        $('#ticketIssue').text(data.IssueId);
+                        $('#ticketDate').text(data.DateReported);
+
+                        // Now show modal dialog
+                        $("#myModal").modal();
+                    })
+                    .fail(function (jqXHR, textStatus, err) {
+                        $('#ticket').text('Error: ' + err);
+                    });
+
+                //window.location.href = 'TicketDetail.html?ID=' + labelEl.text();
+                
+            });
+
+           // Send an AJAX request
+           $.getJSON(uri)
+               .done(function (data) {
+                   // On success, 'data' contains a list of products.
+                   $("#tblTickets > tbody").html("");
+                   for (i = 0; i < data.length; i++) {
+                       // Add a list item for the product.
+                       formatItem(data[i]);
+                   }
+                   // code here
+                   var rowCount = $('#tblTickets tr').length;
+                   
+                   //$("#spanInfoRows").html("" + rowCount);
+                   $("#spanInfoRows").html("" + rowCount);
+               });
+
+           function formatItem(item) {
+               //var markup = "<tr><td class='body-item mbr-fonts - style display-7'>" + item.TicketId + "</td><td class='body- item mbr- fonts - style display-7'>" + item.Subject + "</td><td class='body-item mbr-fonts - style display-7'>" + item.DateReported + "</td><td class='body-item mbr-fonts - style display-7'>" + item.IssueId + "</td></tr>";
+               var markup = "<tr><td class='body-item mbr-fonts - style display-7'>" +
+                   "<label style='color:blue'>" + "TICKET ID: " + "</label>" +
+                   "<label class='lbl'>" + item.TicketId + "</label>" +
+                   "</br>" +
+                   "<label>" + "SUBJECT: " + "</label>" +
+                   "<label>" + item.Subject + "</label>" +
+                   "</br>" +
+                   "<label>" + "DATE REPORTED: " + "</label>" +
+                   "<label>" + item.DateReported + "</label>" +
+                   "</br>" +
+                   "<label>" + "ISSUE: " + "</label>" +
+                   "<label>" + item.IssueId + "</label>" +
+                   "</td></tr>";
+               $("table tbody").append(markup);               
+           }
+        });      
+
+
+    </script>
+
+  
+</body >
+</html >
