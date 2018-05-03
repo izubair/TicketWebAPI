@@ -42,7 +42,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TicketId" Type="int" Nullable="false" />
           <Property Name="FilePath" Type="nvarchar(max)" Nullable="false" />
           <Property Name="FileName" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -156,7 +156,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__TicAttach__Ticke__36B12243">
+        <Association Name="FK__TicAttach__Ticke__49C3F6B7">
           <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
           <End Role="TicAttachments" Type="Self.TicAttachments" Multiplicity="*" />
           <ReferentialConstraint>
@@ -261,7 +261,7 @@
             <End Role="Issues" EntitySet="Issues" />
             <End Role="IssueDetail" EntitySet="IssueDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK__TicAttach__Ticke__36B12243" Association="Self.FK__TicAttach__Ticke__36B12243">
+          <AssociationSet Name="FK__TicAttach__Ticke__49C3F6B7" Association="Self.FK__TicAttach__Ticke__49C3F6B7">
             <End Role="Tickets" EntitySet="Tickets" />
             <End Role="TicAttachments" EntitySet="TicAttachments" />
           </AssociationSet>

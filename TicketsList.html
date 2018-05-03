@@ -70,6 +70,19 @@
                             <span id="ticketDate" style="width: 80%"></span>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <label><b>Attachments: </b></label>
+                            <ul id="filesList">
+                                <li>
+                                    <label>No Attachments</label>
+                                </li>
+                            </ul>
+                            
+                        </div>
+                    </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -222,12 +235,17 @@
                         $('#ticketIssue').text(data.IssueId);
                         $('#ticketDate').text(data.DateReported);
 
+                        // Now get attachments and GetAttachmetns will show the modal dialog
+                        GetAttachments(id);
+
                         // Now show modal dialog
-                        $("#myModal").modal();
+                        //$("#myModal").modal();
                     })
                     .fail(function (jqXHR, textStatus, err) {
                         $('#ticket').text('Error: ' + err);
                     });
+
+                    // Also get attachments
 
                 //window.location.href = 'TicketDetail.html?ID=' + labelEl.text();
                 
@@ -266,6 +284,50 @@
                    "</td></tr>";
                $("table tbody").append(markup);               
            }
+
+           function GetAttachments(ticID) {
+               // <li><a href="#" id="linkLogOut" onclick="btnLogoutClick()">Logout</a></li>
+              
+
+            var uTicketData = {
+            TicketId: ticID,
+            Subject: "",
+            ConstituentID: "",
+            Service: 0,
+            IssueId: 0,
+            IssueDetailId: 0,
+            IssueAddInfoId: 0,
+            Description: "",
+            DateReported: ""
+        };
+               $.ajax({
+                   url: 'api/Tickets/GetTicAttachments',
+                   type: 'POST',
+                   data: JSON.stringify(uTicketData),
+                   dataType: 'json',
+                   contentType: 'application/json',
+                   success: function (data) {
+                       //alert("AJAX success!");
+                       $("#filesList").html("");
+                       for (i = 0; i < data.length; i++) {
+                           liHtml = '<li><a href="' + 'UploadedFiles/' + data[i].fileName + '" id="linkLogOut" onclick="btnLogoutClick()" target="_blank">' + data[i].fileName + '</a></li>';
+
+                           $("#filesList").append(liHtml);
+                       }
+
+                       // Now show modal dialog
+                       $("#myModal").modal();
+                   },
+                   error: function (xhr) {
+
+                       alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                   }
+               });              
+
+           }
+
+           
         });      
 
 

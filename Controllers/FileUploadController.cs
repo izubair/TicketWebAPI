@@ -6,17 +6,27 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
+using TicketWebAPI.Models;
 
 namespace TicketWebAPI.Controllers
 {
+    public class TicAttachedFile
+    {
+        public string fileName { get; set; }
+        public string filePath { get; set; }
+    }
+
     public class FileUploadController : ApiController
     {
-        public static List<string> postedFiles = new List<string>(); 
+        private ServiceRequestDBEntities db = new ServiceRequestDBEntities();
 
+        public static List<string> postedFiles = new List<string>();
+
+       
         [HttpPost]
         public void UploadFile()
-        {
-            postedFiles.Clear();
+        {            
             if (HttpContext.Current.Request.Files.AllKeys.Any())
             {
                 // Get the uploaded image from the Files collection
@@ -39,5 +49,23 @@ namespace TicketWebAPI.Controllers
                 }
             }
         }
+
+        public IEnumerable<String> GetTicFileNames()
+        {            
+            return postedFiles;
+        }
+
+        [ResponseType(typeof(String))]
+        public IHttpActionResult RemoveTicFile(TicAttachedFile ticFileData)
+        {
+            postedFiles.Remove(ticFileData.fileName);
+
+
+            //Session["ticketType"] = 1;
+
+            return Ok("OK");
+        }
+
+
     }
 }

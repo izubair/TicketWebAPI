@@ -1475,6 +1475,38 @@ function UploadFileClick() {
     });
 }
 
+function RemoveFileClick(evt) {
+    var fileData = {
+        fileName: evt.value,
+        filePath: ""        
+    };
+    $.ajax({
+        url: 'api/FileUpload/RemoveTicFile',
+        type: 'POST',
+        data: JSON.stringify(fileData),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+            //alert("AJAX success!");
+            if (data === "OK") {
+                var url = "CreateTicket.html?Type=1"; //?" + queryStr;
+                window.location.href = url;
+            }
+            else {
+                alert("Something went wrong in call to set ticket data");
+            }
+
+            //}
+        },
+        error: function (xhr) {
+
+            alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+        }
+    });
+
+}
+
 
 
 

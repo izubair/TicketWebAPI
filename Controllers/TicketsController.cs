@@ -32,6 +32,14 @@ namespace TicketWebAPI.Controllers
         public int TicketType { get; set; }  // RFS = 1, RFI = 2
     }
 
+    public class TicAttachemntsPath
+    {
+        public int Id { get; set; }
+        public int TicketId { get; set; }
+        public string fileName { get; set; }
+        public string filePath { get; set; }
+    }
+
     public class Issue
     {
         public int IssueId { get; set; }
@@ -343,27 +351,30 @@ namespace TicketWebAPI.Controllers
             // Also store attachments  
             if (FileUploadController.postedFiles.Count > 0)
             {
-                var fileName = FileUploadController.postedFiles.First();
-
-                var fileSourcePath = Path.Combine(HttpContext.Current.Server.MapPath("~/TempFiles"), fileName);
-
-                // Get the complete file path
-                var fileDestPath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), fileName);
-
-                // Save the uploaded file to "UploadedFiles" folder
-                File.Move(fileSourcePath, fileDestPath);
-
-                // Also store file path in DB
-                TicAttachment ticAttachment = new TicAttachment
+                foreach(var fileName in FileUploadController.postedFiles)
                 {
-                    //uTic.TicketId = uTic.TicketId;
-                    TicketId = ticket.TicketId,
-                    FilePath = fileDestPath,
-                    FileName = fileName
-                };                              
+                    var fileSourcePath = Path.Combine(HttpContext.Current.Server.MapPath("~/TempFiles"), fileName);
+                    // Get the complete file path
+                    var fileDestPath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), fileName);
+                    // Save the uploaded file to "UploadedFiles" folder
+                    File.Move(fileSourcePath, fileDestPath);
+                    // Also store file path in DB
+                    TicAttachment ticAttachment = new TicAttachment
+                    {
+                        //uTic.TicketId = uTic.TicketId;
+                        TicketId = ticket.TicketId,
+                        FilePath = fileDestPath,
+                        FileName = fileName
+                    };
 
-                db.TicAttachments.Add(ticAttachment);
-                db.SaveChanges();
+                    db.TicAttachments.Add(ticAttachment);
+                    db.SaveChanges();
+                }
+                //var fileName = FileUploadController.postedFiles.First();
+
+                
+
+                FileUploadController.postedFiles.Clear();
             }
 
             //return CreatedAtRoute("DefaultApi", new { id = ticket.TicketId }, ticket);
@@ -460,6 +471,30 @@ namespace TicketWebAPI.Controllers
             //Session["ticketType"] = 1;
 
             return Ok("OK");
+        }
+
+        //
+        [HttpPost]
+        public IHttpActionResult GetTicAttachments(UserTicket tic)
+        {
+            List<TicAttachemntsPath> ticList = new List<TicAttachemntsPath>();
+
+            var currentTicAttachments = db.TicAttachments.Where(o => o.TicketId == tic.TicketId);
+
+            foreach (var ticA in currentTicAttachments)
+            {
+                TicAttachemntsPath tAttachPath = new TicAttachemntsPath();
+                tAttachPath.TicketId = ticA.TicketId;
+                tAttachPath.Id = ticA.Id;
+                tAttachPath.fileName = ticA.FileName;
+                tAttachPath.filePath = ticA.FilePath;
+
+
+
+                ticList.Add(tAttachPath);
+            }
+            return Ok(ticList);
+            //return db.Tickets;
         }
 
 

@@ -101,7 +101,15 @@
 
                         <label for="description">Description:</label>
                         <textarea class="form-control form-control-sm" rows="2" id="description"></textarea>
+
+                    
+                        <label>Attachments:</label>
+                        <ul id="ticAttachedFiles">
+                            <li> No Attachments</li>
+                        </ul>
+                   
                     </div>
+                </div>
 
                 <div class="row">
                     <div class="col-sm-4">
@@ -116,6 +124,7 @@
                         <a href="AttachFile.html" class="right-btn">Attach files...</a>
                     </div>
                </div>
+               
 
         </form>
 
@@ -146,6 +155,8 @@
             var urlParams = new URLSearchParams(window.location.search);
             ticketType = urlParams.get('Type');
             getIssues();
+
+            getTicAttachFiles();
 
             $('#btnCreate').click(function () {
                 addTicket();
@@ -311,6 +322,30 @@
                 //    //window.location.reload();
                 //    window.location.href = 'TicketsList.html'; 
                 //}
+            });
+        }
+
+        function getTicAttachFiles() {
+            $.ajax({
+                url: 'api/FileUpload/GetTicFileNames',
+                type: 'GET',
+                dataType: 'json',
+                contentType: 'application/json',
+                success: function (data) {
+                    //alert("AJAX success!");
+                    //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                    $("#ticAttachedFiles").html("");
+                    for (i = 0; i < data.length; i++) {
+                        liHtml = '<li><a href="' + 'TempFiles/' + data[i] + '" id="linkLogOut" onclick="btnLogoutClick()" target="_blank">' + data[i] + '</a> <button type="button" value="' + data[i] + '" onclick="RemoveFileClick(this)">Remove</button></li>';
+
+                        $("#ticAttachedFiles").append(liHtml);
+                    }
+                },
+                error: function (xhr) {
+
+                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                }
             });
         }
     });
