@@ -1448,35 +1448,11 @@ function OnAuth0Success() {
     });
 }
 
-// File upload 
-function UploadFileClick() {
-    var data = new FormData();
 
-    var files = $("#fileUpload").get(0).files;
-
-    // Add the uploaded image content to the form data collection
-    if (files.length > 0) {
-        data.append("UploadedImage", files[0]);
-    }
-
-    // Make Ajax request with the contentType = false, and procesDate = false
-    var ajaxRequest = $.ajax({
-        type: "POST",
-        url: "/api/fileupload/uploadfile",
-        contentType: false,
-        processData: false,
-        data: data
-    });
-
-    ajaxRequest.done(function (xhr, textStatus) {
-        // Do other operation
-        var url = "CreateTicket.html?Type=1"; //?" + queryStr;
-        window.location.href = url;
-    });
-}
 
 function RemoveFileClick(evt) {
     var fileData = {
+        ticID: "",
         fileName: evt.value,
         filePath: ""        
     };
@@ -1505,6 +1481,42 @@ function RemoveFileClick(evt) {
         }
     });
 
+}
+
+function SubmitReplyClick() {
+    url = "TicketsList.html?Mode=1";
+    if (localStorage) {
+        selTicketID = localStorage.getItem('TicketsList_TicID');
+    }
+    var repText = $('#reply').val();
+    var replyData = {
+        TicketId: selTicketID,
+        ReplyText: repText
+    };
+
+    $.ajax({
+        url: 'api/Tickets/SaveTicReply',
+        type: 'POST',
+        data: JSON.stringify(replyData),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+            //alert("AJAX success!");
+            if (data === "OK") {
+                window.location.href = url;
+            }
+            else {
+                alert("Something went wrong in call to api/FileUpload/SaveTicReply");
+            }
+
+            //}
+        },
+        error: function (xhr) {
+
+            alert("Something went wrong in call to api/FileUpload/SaveTicReply, please try again" + JSON.stringify(xhr));
+
+        }
+    });
 }
 
 

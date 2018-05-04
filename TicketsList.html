@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                             <label><b>Attachments: </b></label>
                             <ul id="filesList">
                                 <li>
@@ -80,6 +80,24 @@
                                 </li>
                             </ul>
                             
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6"> 
+                            <a href="AttachFile.html?Mode=1" class="right-btn">Attach files...</a>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                            <label><b>Replies: </b></label>
+                            <ul id="repliesList">
+                                <li>
+                                    <label>No Replies</label>
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                            <a href="ReplyInput.html?Mode=1" class="right-btn">Reply...</a>
                         </div>
                     </div>
 
@@ -213,8 +231,29 @@
     </footer>
 
     <script type="text/javascript">
-       var uri = 'api/Tickets/GetTickets';
+        var uri = 'api/Tickets/GetTickets';
+        var selTicketID = 0;
+        var funcMode = 0;
         $(document).ready(function () {
+            // When we reach this page from AtachFile.html Mode=1 and we display previously selected ticket otherwise Mode is not set
+            var urlParams = new URLSearchParams(window.location.search);
+            funcMode = urlParams.get('Mode');
+            if (funcMode != 1)
+            {
+                if (localStorage) {
+                    localStorage.setItem('TicketsList_TicID', '0');
+                }
+            }
+
+            if (localStorage) {
+                selTicketID = localStorage.getItem('TicketsList_TicID');
+            }
+            if (selTicketID != null && selTicketID != 0)
+            {
+                FillTicDataAndShow(selTicketID);
+            }
+
+
             $('#tblTickets:has(td)').click(function (e) {
                 var currentRow = $(e.target).closest("tr");
                 var col1 = currentRow.find("td:eq(0)"); // get current row 1st TD value
@@ -224,7 +263,20 @@
                 
                 var id = labelEl.text();
 
-                $.getJSON('api/Tickets/GetTicket' + '/' + id)
+                if (localStorage) {
+                    localStorage.setItem('TicketsList_TicID', id);
+                }
+
+                FillTicDataAndShow(id);
+
+                    // Also get attachments
+
+                //window.location.href = 'TicketDetail.html?ID=' + labelEl.text();
+                
+            });
+
+            function FillTicDataAndShow(ticID) {
+                $.getJSON('api/Tickets/GetTicket' + '/' + ticID)
                     .done(function (data) {
                         //$('#ticket').text(formatItem(data));
 
@@ -236,7 +288,7 @@
                         $('#ticketDate').text(data.DateReported);
 
                         // Now get attachments and GetAttachmetns will show the modal dialog
-                        GetAttachments(id);
+                        GetAttachments(ticID);
 
                         // Now show modal dialog
                         //$("#myModal").modal();
@@ -244,12 +296,7 @@
                     .fail(function (jqXHR, textStatus, err) {
                         $('#ticket').text('Error: ' + err);
                     });
-
-                    // Also get attachments
-
-                //window.location.href = 'TicketDetail.html?ID=' + labelEl.text();
-                
-            });
+            }
 
            // Send an AJAX request
            $.getJSON(uri)
@@ -265,7 +312,9 @@
                    
                    //$("#spanInfoRows").html("" + rowCount);
                    $("#spanInfoRows").html("" + rowCount);
-               });
+                });
+
+        
 
            function formatItem(item) {
                //var markup = "<tr><td class='body-item mbr-fonts - style display-7'>" + item.TicketId + "</td><td class='body- item mbr- fonts - style display-7'>" + item.Subject + "</td><td class='body-item mbr-fonts - style display-7'>" + item.DateReported + "</td><td class='body-item mbr-fonts - style display-7'>" + item.IssueId + "</td></tr>";
@@ -310,9 +359,51 @@
                        //alert("AJAX success!");
                        $("#filesList").html("");
                        for (i = 0; i < data.length; i++) {
-                           liHtml = '<li><a href="' + 'UploadedFiles/' + data[i].fileName + '" id="linkLogOut" onclick="btnLogoutClick()" target="_blank">' + data[i].fileName + '</a></li>';
+                           liHtml = '<li><a href="' + 'UploadedFiles/' + data[i].fileName + '" target="_blank">' + data[i].fileName + '</a></li>';
 
                            $("#filesList").append(liHtml);
+                       }
+
+                       // Also get ticket replies
+                       GetReplies(ticID);
+                   },
+                   error: function (xhr) {
+
+                       alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                   }
+               });              
+
+           }
+
+           function GetReplies(ticID) {
+               // <li><a href="#" id="linkLogOut" onclick="btnLogoutClick()">Logout</a></li>
+
+
+               var uTicketData = {
+                   TicketId: ticID,
+                   Subject: "",
+                   ConstituentID: "",
+                   Service: 0,
+                   IssueId: 0,
+                   IssueDetailId: 0,
+                   IssueAddInfoId: 0,
+                   Description: "",
+                   DateReported: ""
+               };
+               $.ajax({
+                   url: 'api/Tickets/GetTicReplies',
+                   type: 'POST',
+                   data: JSON.stringify(uTicketData),
+                   dataType: 'json',
+                   contentType: 'application/json',
+                   success: function (data) {
+                       //alert("AJAX success!");
+                       $("#repliesList").html("");
+                       for (i = 0; i < data.length; i++) {
+                           liHtml = '<li>' +  data[i].ReplyText +  '</li>';
+
+                           $("#repliesList").append(liHtml);
                        }
 
                        // Now show modal dialog
@@ -323,7 +414,7 @@
                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
 
                    }
-               });              
+               });
 
            }
 

@@ -33,5 +33,7 @@ namespace TicketWebAPI.Models
         public virtual DbSet<TicketLocation> TicketLocations { get; set; }
         public virtual DbSet<Ticket> Tickets { get; set; }
         public virtual DbSet<TicAttachment> TicAttachments { get; set; }
+        public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
+        public virtual DbSet<TicReply> TicReplies { get; set; }
     }
 }

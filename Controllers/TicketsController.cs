@@ -40,6 +40,13 @@ namespace TicketWebAPI.Controllers
         public string filePath { get; set; }
     }
 
+    public class TicketReply
+    {
+        public int Id { get; set; }
+        public int TicketId { get; set; }
+        public string ReplyText { get; set; }
+    }
+
     public class Issue
     {
         public int IssueId { get; set; }
@@ -351,11 +358,13 @@ namespace TicketWebAPI.Controllers
             // Also store attachments  
             if (FileUploadController.postedFiles.Count > 0)
             {
-                foreach(var fileName in FileUploadController.postedFiles)
+                var fileNameUnique = "";
+                foreach (var fileName in FileUploadController.postedFiles)
                 {
                     var fileSourcePath = Path.Combine(HttpContext.Current.Server.MapPath("~/TempFiles"), fileName);
                     // Get the complete file path
-                    var fileDestPath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), fileName);
+                    fileNameUnique = ticket.TicketId + fileName;
+                    var fileDestPath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), fileNameUnique);
                     // Save the uploaded file to "UploadedFiles" folder
                     File.Move(fileSourcePath, fileDestPath);
                     // Also store file path in DB
@@ -364,7 +373,7 @@ namespace TicketWebAPI.Controllers
                         //uTic.TicketId = uTic.TicketId;
                         TicketId = ticket.TicketId,
                         FilePath = fileDestPath,
-                        FileName = fileName
+                        FileName = fileNameUnique
                     };
 
                     db.TicAttachments.Add(ticAttachment);
@@ -495,6 +504,48 @@ namespace TicketWebAPI.Controllers
             }
             return Ok(ticList);
             //return db.Tickets;
+        }
+
+        //
+        [HttpPost]
+        public IHttpActionResult GetTicReplies(UserTicket tic)
+        {
+            List<TicketReply> ticRList = new List<TicketReply>();
+
+            var currentTicReplies = db.TicReplies.Where(o => o.TicketId == tic.TicketId);
+
+            foreach (var ticR in currentTicReplies)
+            {
+                TicketReply tReply = new TicketReply();
+                tReply.TicketId = ticR.TicketId;
+                tReply.Id = ticR.Id;
+                tReply.ReplyText = ticR.ReplyText;
+               
+
+
+
+                ticRList.Add(tReply);
+            }
+            return Ok(ticRList);
+            //return db.Tickets;
+        }
+
+        [ResponseType(typeof(String))]
+        public IHttpActionResult SaveTicReply(TicketReply tReply)
+        {            
+            // Also store file path in DB
+            TicReply ticR = new TicReply
+            {
+                //uTic.TicketId = uTic.TicketId;
+                TicketId = tReply.TicketId,
+                ReplyText = tReply.ReplyText
+            };
+
+            db.TicReplies.Add(ticR);
+            db.SaveChanges();
+              
+
+            return Ok("OK");
         }
 
 

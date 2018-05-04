@@ -203,6 +203,7 @@
       <DependentUpon>CCDBModel.edmx</DependentUpon>
       <LastGenOutput>CCDBModel.cs</LastGenOutput>
     </Content>
+    <Content Include="ReplyInput.html" />
     <Content Include="Scripts\WSFuncCalls.js" />
     <Content Include="TicketDetail.html" />
     <Content Include="TicketsList.html" />
@@ -239,6 +240,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CCDBModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\C__RefactorLog.cs">
+      <DependentUpon>CCDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Dept.cs">
       <DependentUpon>CCDBModel.tt</DependentUpon>
     </Compile>
@@ -261,6 +265,9 @@
       <DependentUpon>CCDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TicketLocation.cs">
+      <DependentUpon>CCDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TicReply.cs">
       <DependentUpon>CCDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

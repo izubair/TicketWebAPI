@@ -20,6 +20,7 @@ namespace TicketWebAPI.Models
             this.TicketLocAdditionals = new HashSet<TicketLocAdditional>();
             this.TicketLocations = new HashSet<TicketLocation>();
             this.TicAttachments = new HashSet<TicAttachment>();
+            this.TicReplies = new HashSet<TicReply>();
         }
     
         public int TicketId { get; set; }
@@ -43,5 +44,7 @@ namespace TicketWebAPI.Models
         public virtual ICollection<TicketLocation> TicketLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TicAttachment> TicAttachments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TicReply> TicReplies { get; set; }
     }
 }

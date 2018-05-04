@@ -24,6 +24,9 @@
         <AssociationConnector Association="ServiceRequestDBModel.FK__TicketLoc__Ticke__2A4B4B5E" ManuallyRouted="false" />
         <EntityTypeShape EntityType="ServiceRequestDBModel.TicAttachment" Width="1.5" PointX="10.5" PointY="11.875" />
         <AssociationConnector Association="ServiceRequestDBModel.FK__TicAttach__Ticke__36B12243" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.C__RefactorLog" Width="1.5" PointX="0.75" PointY="1.375" />
+        <EntityTypeShape EntityType="ServiceRequestDBModel.TicReply" Width="1.5" PointX="10.875" PointY="0.75" />
+        <AssociationConnector Association="ServiceRequestDBModel.FK__TicReplie__Ticke__4CA06362" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

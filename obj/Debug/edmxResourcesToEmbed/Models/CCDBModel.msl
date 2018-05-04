@@ -100,5 +100,21 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="C__RefactorLog">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.C__RefactorLog">
+        <MappingFragment StoreEntitySet="__RefactorLog">
+          <ScalarProperty Name="OperationKey" ColumnName="OperationKey" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TicReplies">
+      <EntityTypeMapping TypeName="ServiceRequestDBModel.TicReply">
+        <MappingFragment StoreEntitySet="TicReplies">
+          <ScalarProperty Name="ReplyText" ColumnName="ReplyText" />
+          <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

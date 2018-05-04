@@ -102,6 +102,7 @@
     <NavigationProperty Name="TicketLocAdditionals" Relationship="Self.FK__TicketLoc__Ticke__29572725" FromRole="Tickets" ToRole="TicketLocAdditional" />
     <NavigationProperty Name="TicketLocations" Relationship="Self.FK__TicketLoc__Ticke__2A4B4B5E" FromRole="Tickets" ToRole="TicketLocation" />
     <NavigationProperty Name="TicAttachments" Relationship="ServiceRequestDBModel.FK__TicAttach__Ticke__36B12243" FromRole="Ticket" ToRole="TicAttachment" />
+    <NavigationProperty Name="TicReplies" Relationship="ServiceRequestDBModel.FK__TicReplie__Ticke__4CA06362" FromRole="Ticket" ToRole="TicReply" />
   </EntityType>
   <Association Name="FK__IssueAddI__DeptI__267ABA7A">
     <End Role="Depts" Type="Self.Dept" Multiplicity="0..1" />
@@ -280,6 +281,12 @@
       <End Role="Ticket" EntitySet="Tickets" />
       <End Role="TicAttachment" EntitySet="TicAttachments" />
     </AssociationSet>
+    <EntitySet Name="C__RefactorLog" EntityType="ServiceRequestDBModel.C__RefactorLog" />
+    <EntitySet Name="TicReplies" EntityType="ServiceRequestDBModel.TicReply" />
+    <AssociationSet Name="FK__TicReplie__Ticke__4CA06362" Association="ServiceRequestDBModel.FK__TicReplie__Ticke__4CA06362">
+      <End Role="Ticket" EntitySet="Tickets" />
+      <End Role="TicReply" EntitySet="TicReplies" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="TicAttachment">
     <Key>
@@ -299,6 +306,33 @@
         <PropertyRef Name="TicketId" />
       </Principal>
       <Dependent Role="TicAttachment">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="C__RefactorLog">
+    <Key>
+      <PropertyRef Name="OperationKey" />
+    </Key>
+    <Property Name="OperationKey" Type="Guid" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicReply">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TicketId" Type="Int32" Nullable="false" />
+    <Property Name="ReplyText" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Ticket" Relationship="ServiceRequestDBModel.FK__TicReplie__Ticke__4CA06362" FromRole="TicReply" ToRole="Ticket" />
+  </EntityType>
+  <Association Name="FK__TicReplie__Ticke__4CA06362">
+    <End Type="ServiceRequestDBModel.Ticket" Role="Ticket" Multiplicity="1" />
+    <End Type="ServiceRequestDBModel.TicReply" Role="TicReply" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ticket">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicReply">
         <PropertyRef Name="TicketId" />
       </Dependent>
     </ReferentialConstraint>

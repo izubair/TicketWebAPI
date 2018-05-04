@@ -13,6 +13,7 @@ namespace TicketWebAPI.Controllers
 {
     public class TicAttachedFile
     {
+        public string ticID { get; set; }
         public string fileName { get; set; }
         public string filePath { get; set; }
     }
@@ -65,6 +66,48 @@ namespace TicketWebAPI.Controllers
 
             return Ok("OK");
         }
+
+        [ResponseType(typeof(String))]
+        public IHttpActionResult SaveTicFile(TicAttachedFile ticFileData)
+        {
+            // Also store attachments  
+            if (FileUploadController.postedFiles.Count > 0)
+            {
+                var fileNameUnique = "";
+                foreach (var fileName in FileUploadController.postedFiles)
+                {
+                    var fileSourcePath = Path.Combine(HttpContext.Current.Server.MapPath("~/TempFiles"), fileName);
+                    // Get the complete file path
+                    fileNameUnique = ticFileData.ticID + fileName;
+                    var fileDestPath = Path.Combine(HttpContext.Current.Server.MapPath("~/UploadedFiles"), fileNameUnique);
+                    // Save the uploaded file to "UploadedFiles" folder
+                    File.Move(fileSourcePath, fileDestPath);
+                    // Also store file path in DB
+                    TicAttachment ticAttachment = new TicAttachment
+                    {
+                        //uTic.TicketId = uTic.TicketId;
+                        TicketId = Convert.ToInt32(ticFileData.ticID),
+                        FilePath = fileDestPath,
+                        FileName = fileNameUnique
+                    };
+
+                    db.TicAttachments.Add(ticAttachment);
+                    db.SaveChanges();
+                }
+                //var fileName = FileUploadController.postedFiles.First();
+
+
+
+                FileUploadController.postedFiles.Clear();
+            }
+
+
+            //Session["ticketType"] = 1;
+
+            return Ok("OK");
+        }
+
+
 
 
     }

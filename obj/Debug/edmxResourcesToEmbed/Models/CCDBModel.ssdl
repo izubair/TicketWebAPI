@@ -1,5 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="ServiceRequestDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="__RefactorLog">
+    <Key>
+      <PropertyRef Name="OperationKey" />
+    </Key>
+    <Property Name="OperationKey" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
   <EntityType Name="Depts">
     <Key>
       <PropertyRef Name="DeptId" />
@@ -90,6 +96,14 @@
     <Property Name="DateReported" Type="date" />
     <Property Name="TimeReported" Type="time" Precision="7" />
     <Property Name="TicketStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TicReplies">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TicketId" Type="int" Nullable="false" />
+    <Property Name="ReplyText" Type="varchar(max)" Nullable="false" />
   </EntityType>
   <Association Name="FK__IssueAddI__DeptI__267ABA7A">
     <End Role="Depts" Type="Self.Depts" Multiplicity="0..1" />
@@ -227,7 +241,20 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__TicReplie__Ticke__4CA06362">
+    <End Role="Tickets" Type="Self.Tickets" Multiplicity="1" />
+    <End Role="TicReplies" Type="Self.TicReplies" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tickets">
+        <PropertyRef Name="TicketId" />
+      </Principal>
+      <Dependent Role="TicReplies">
+        <PropertyRef Name="TicketId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <EntityContainer Name="ServiceRequestDBModelStoreContainer">
+    <EntitySet Name="__RefactorLog" EntityType="Self.__RefactorLog" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Depts" EntityType="Self.Depts" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueAddInfo" EntityType="Self.IssueAddInfo" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="IssueDetail" EntityType="Self.IssueDetail" Schema="dbo" store:Type="Tables" />
@@ -236,6 +263,7 @@
     <EntitySet Name="TicketLocAdditional" EntityType="Self.TicketLocAdditional" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TicketLocation" EntityType="Self.TicketLocation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tickets" EntityType="Self.Tickets" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TicReplies" EntityType="Self.TicReplies" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="FK__IssueAddI__DeptI__267ABA7A" Association="Self.FK__IssueAddI__DeptI__267ABA7A">
       <End Role="Depts" EntitySet="Depts" />
       <End Role="IssueAddInfo" EntitySet="IssueAddInfo" />
@@ -279,6 +307,10 @@
     <AssociationSet Name="FK__Tickets__IssueId__2B3F6F97" Association="Self.FK__Tickets__IssueId__2B3F6F97">
       <End Role="Issues" EntitySet="Issues" />
       <End Role="Tickets" EntitySet="Tickets" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TicReplie__Ticke__4CA06362" Association="Self.FK__TicReplie__Ticke__4CA06362">
+      <End Role="Tickets" EntitySet="Tickets" />
+      <End Role="TicReplies" EntitySet="TicReplies" />
     </AssociationSet>
   </EntityContainer>
 </Schema>
