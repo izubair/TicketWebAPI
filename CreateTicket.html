@@ -24,6 +24,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Select Attachment File</h4>
+                </div>
+                <div class="modal-body">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--End Modal-->
+
     <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -66,7 +86,7 @@
     <!-- To aligh horizontally use margin:auto -->
     <div class="container" style="background-color:Highlight; padding: 20px; padding-top: 50px; margin: auto;" >
         
-        <form>            
+        <form autocomplete="on">            
             <div class="form">               
             
                 <div class="form-group">
@@ -76,7 +96,7 @@
                     <input class="form-control form-control-sm" type="text" id="subject">
                
                         <label for="IssueId">Issue:</label>
-                        <select class="form-control" id="IssueId">
+                        <select class="form-control" id="IssueId" name="IssueId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -84,7 +104,7 @@
                         </select>
               
                         <label for="IssueDetailId">Detail:</label>
-                        <select class="form-control form-control-sm" id="IssueDetailId">
+                        <select class="form-control form-control-sm" id="IssueDetailId" name="IssueDetailId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -92,7 +112,7 @@
                         </select>
 
                         <label for="IssueAddInfoId">Additional Information:</label>
-                        <select class="form-control form-control-sm" id="IssueAddInfoId">
+                        <select class="form-control form-control-sm" id="IssueAddInfoId" name="IssueAddInfoId">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -120,8 +140,10 @@
                         <a href="TicketsList.html" class="right-btn">Back to list</a>
                     </div>
 
-                    <div class="col-sm-4">
-                        <a href="AttachFile.html" class="right-btn">Attach files...</a>
+                    <div class="col-sm-4">                        
+                       
+                        <a href="#" class="right-btn" onclick="AttachFileClick()">Attach files...</a>
+                       
                     </div>
                </div>
                
@@ -154,56 +176,78 @@
     $(document).ready(function () {
             var urlParams = new URLSearchParams(window.location.search);
             ticketType = urlParams.get('Type');
-            getIssues();
-
+            getIssues();         
+            
             getTicAttachFiles();
 
             $('#btnCreate').click(function () {
                 addTicket();
             });
 
+            function getIssueDetails() {
+                var IssueId = $("#IssueId").val();
+
+                if (IssueId == undefined || IssueId == null || IssueId < 1)
+                {
+                    console.log("getIssueDetails::IssueId not set so not calling function to get IssueDetail");
+                    return;
+                }
+                
+                var subItems = "";
+                $.ajax({
+                    url: 'api/Tickets/GetIssueDetail',
+                    type: 'GET',
+                    data: { id: IssueId },
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        //alert("AJAX success!");
+                        //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
+                        var subItems;
+                        for (i = 0; i < data.length; i++) {
+                            //$.each(data, function (index, item) {
+                            subItems += "<option value='" + data[i].IssueDetailId + "'>" + data[i].Details + "</option>";
+                            //});
+                        }
+                        $("#IssueDetailId").html(subItems);
+                        //if (subItems.length > 1) {
+                        //$("#IssueDetailId").change();
+                        //$("#IssueDetailId").removeAttr("disabled");
+                        $("#IssueDetailId").attr("disabled", false);
+                        $("#IssueAddInfoId").html("");
+                        $("#IssueAddInfoId").attr("disabled", true);
+                        // Set Issue Detail in case filling form from previous data
+                        setIssueDetail();
+                        //}
+                    },
+                    error: function (xhr) {
+
+                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
+
+                    }
+                });
+            }
         $("#IssueId").change(function () {
             //alert("Change triggered!");
-
-            var IssueId = $(this).val();
-            var subItems = "";
-            $.ajax({
-                url: 'api/Tickets/GetIssueDetail',
-                type: 'GET',
-                data: { id: IssueId },
-                dataType: 'json',
-                contentType: 'application/json',
-                success: function (data) {
-                    //alert("AJAX success!");
-                    //subItems = "<option value='" + 0 + "'>" + "Select Item" + "</option>";
-                    var subItems;
-                    for (i = 0; i < data.length; i++) {
-                        //$.each(data, function (index, item) {
-                        subItems += "<option value='" + data[i].IssueDetailId + "'>" + data[i].Details + "</option>";
-                        //});
-                    }
-                    $("#IssueDetailId").html(subItems);
-                    //if (subItems.length > 1) {
-                        //$("#IssueDetailId").change();
-                    //$("#IssueDetailId").removeAttr("disabled");
-                    $("#IssueDetailId").attr("disabled", false);
-                    $("#IssueAddInfoId").html("");
-                    $("#IssueAddInfoId").attr("disabled", true);
-                    //}
-                },
-                error: function (xhr) {
-
-                    alert("Something went wrong, please try again" + JSON.stringify(xhr));
-
-                }
-            });
+            getIssueDetails();
+            
         });
 
-        // Issue Additional Info
-        $("#IssueDetailId").change(function () {
-            //alert("Change triggered!");
+        function getIssueAddInfo() {
             var IssueId = $("#IssueId").val();
-            var IssueDetailId = $(this).val();
+            var IssueDetailId = $("#IssueDetailId").val();
+
+            if (IssueId == undefined || IssueId == null || IssueId < 1) {
+                console.log("getIssueDetails::IssueId not set so not calling function to get IssueDetail");
+                return;
+            }
+
+            if (IssueDetailId == undefined || IssueDetailId == null || IssueDetailId < 1) {
+                console.log("getIssueDetails::IssueDetailId not set so not calling function to get IssueDetail");
+                return;
+            }
+                      
+
             var subItems = "";
             $.ajax({
                 url: 'api/Tickets/GetIssueAddInfo',
@@ -223,8 +267,10 @@
                     $("#IssueAddInfoId").html(subItems);
                     //if (subItems.length > 1) {
                     //{
-                        $("#IssueAddInfoId").change();
-                        $("#IssueAddInfoId").attr("disabled", false);
+                    $("#IssueAddInfoId").change();
+                    $("#IssueAddInfoId").attr("disabled", false);
+                    // Set Add Info in case filling form with previous data
+                    setIssueAddInfo();
                     //}
 
                 },
@@ -234,7 +280,55 @@
 
                 }
             });
+        }
+        // Issue Additional Info
+        $("#IssueDetailId").change(function () {
+            //alert("Change triggered!");
+            getIssueAddInfo();
         });
+
+        function setIssue()
+        {
+            // Check if form data available to be populdated
+            var uTicObj = JSON.parse(localStorage.getItem('ticketObj'));
+            if (uTicObj != undefined) {
+                if (uTicObj != null && uTicObj.Subject != null && uTicObj.Subject != "") {
+                    $('#subject').val(uTicObj.Subject); 
+                    
+                    $('#IssueId').val(uTicObj.IssueId);                  
+                    getIssueDetails();
+                   
+                    $('#description').val(uTicObj.Description);
+
+                   
+                }
+            }
+        }
+
+        function setIssueDetail() {
+            // Check if form data available to be populdated
+            var uTicObj = JSON.parse(localStorage.getItem('ticketObj'));
+            if (uTicObj != undefined) {
+                if (uTicObj != null && uTicObj.Subject != null && uTicObj.Subject != "") {                                       
+                    $('#IssueDetailId').val(uTicObj.IssueDetailId);
+                    
+                    getIssueAddInfo();                   
+                }
+            }
+        }
+
+        function setIssueAddInfo() {
+            // Check if form data available to be populdated
+            var uTicObj = JSON.parse(localStorage.getItem('ticketObj'));
+            if (uTicObj != undefined) {
+                if (uTicObj != null && uTicObj.Subject != null && uTicObj.Subject != "") {                   
+
+                    $('#IssueAddInfoId').val(uTicObj.IssueAddInfoId);                    
+                   
+                }
+            }
+        }
+
 
         function getIssues() {
             $.ajax({
@@ -251,7 +345,15 @@
                         subItems += "<option value='" + data[i].IssueId + "'>" + data[i].Description + "</option>";
                         //});
                     }
-                    $("#IssueId").html(subItems);                   
+                    $("#IssueId").html(subItems);  
+
+                    // Also make selection if filling previous form data
+                    setIssue();
+
+                    $("#IssueDetailId").html("");
+                    $("#IssueDetailId").attr("disabled", true);
+                    $("#IssueAddInfoId").html("");
+                    $("#IssueAddInfoId").attr("disabled", true);
                 },
                 error: function (xhr) {
 
@@ -303,6 +405,9 @@
                 success: function (data) {
                     //alert("AJAX success!");
                     if (data === "OK") {
+                        if (localStorage) {
+                            localStorage.setItem('ticketObj', null);
+                        }
                         var url = "TicketsList.html"; //?" + queryStr;
                         window.location.href = url;
                     }
@@ -349,6 +454,48 @@
             });
         }
     });
+
+    function AttachFileClick() {
+        // First preserve form data
+        copyFormData();
+
+        $('.modal-body').load('AttachFile.html', function () {
+            $('#myModal').modal({ show: true });
+        });
+    }
+
+    function copyFormData() {
+        var subject = $('#subject').val();
+        var issueId = $('#IssueId').val();
+        var issueDetailId = $('#IssueDetailId').val();
+        var issueAddInfoId = $('#IssueAddInfoId').val();
+        var desc = $('#description').val();
+      
+        var uTicket = {
+            'Subject': '',
+            'ConstituentID': '1',
+            'Service': '',
+            'IssueId': '',
+            'IssueDetailId': '',
+            'IssueAddInfoId': '',
+            'Description': '',
+            'DateReported': '',
+            'TimeReported': '',
+            'TicketStatus': '1',
+            'TicketType': ''
+        };
+
+        uTicket.Subject = subject;
+        uTicket.IssueId = issueId;
+        uTicket.IssueDetailId = issueDetailId;
+        uTicket.IssueAddInfoId = issueAddInfoId;
+        uTicket.Description = desc;
+       
+        uTicket.TicketType = ticketType;
+
+        localStorage.setItem('ticketObj', JSON.stringify(uTicket));
+
+    }
     </script>
 </body>
 </html>

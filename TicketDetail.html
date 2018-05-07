@@ -2,62 +2,21 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-    <div class="container">
+    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="initial-scale=1.0">
+    <title>Ticket Detail</title>
+    <script src="../Scripts/WSFuncCalls.js"></script>
 
-        <!-- Modal -->
-        <div class="modal fade" id="myModal" role="dialog">
-            <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 id="ticketID" class="modal-title">TicketID</h4>
-                    </div>
-                    <div class="modal-body">
-                        <p>Ticket details</p>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                <label><b>Subject: </b></label>
-                                <span id="ticketSubject" style="width: 80%"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                <label><b>Description: </b></label>
-                                <span id="ticketDesc" style="width: 80%"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                <label><b>Issue: </b></label>
-                                <span id="ticketIssue" style="width: 80%"></span>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-                                <label><b>Date Reported: </b></label>
-                                <span id="ticketDate" style="width: 80%"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
 
-            </div>
-        </div>
-        <!--End Modal-->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
-       
-    </div>
+
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="Content/WebSiteStyles.css">
 
     <!-- jQuery library -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -65,7 +24,103 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript">
+</head>
+<body>
+
+   
+
+    <div class="container">
+        <p>Ticket details</p>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <label><b>Subject: </b></label>
+                <span id="ticketSubject" style="width: 80%"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <label><b>Description: </b></label>
+                <span id="ticketDesc" style="width: 80%"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <label><b>Issue: </b></label>
+                <span id="ticketIssue" style="width: 80%"></span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                <label><b>Date Reported: </b></label>
+                <span id="ticketDate" style="width: 80%"></span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-7 col-md-7 col-xs-7 col-sm-7">
+                <label><b>Attachments: </b></label>               
+
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                <a href="AttachFile.html?Mode=1" class="right-btn">Attach...</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div id="attachDiv" class="col-lg-9 col-md-9 col-xs-9 col-sm-9" style="height: 100%; overflow-y: auto;">
+                <ul id="filesList">
+                    <li>
+                        <label>No Attachments</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-7 col-md-7 col-xs-7 col-sm-7">
+                <label><b>Replies: </b></label>
+            </div>
+            <div class="col-lg-2 col-md-2 col-xs-2 col-sm-2">
+                <a href="ReplyInput.html?Mode=1" class="right-btn">Reply...</a>
+            </div>
+
+        </div>
+        <div class="row">
+            <div id="replyDiv" class="col-lg-9 col-md-9 col-xs-9 col-sm-9" style="height: 100%; overflow-y: auto;">
+                <ul id="repliesList">
+                    <li>
+                        <label>No Replies</label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+    </div>
+
+            <script type="text/javascript">
+        /*
+        $(document).ready(function () {
+            if (localStorage) {
+                selTicketID = localStorage.getItem('TicketsList_TicID');
+            }
+            if (selTicketID != null && selTicketID != 0) {
+                FillTicDataAndShow(selTicketID);
+            }
+        });
+
+        function AttachFileClick() {
+            $('.modal-body').load('AttachFile.html?Mode=1', function () {
+                $('#myModal_attach').modal({ show: true });
+            });
+        }
+
+*/
+
+
+
+
+        /*
        var uri = 'api/Tickets/GetTickets';
         $(document).ready(function () {
             // Get id passed to page as parameter
@@ -91,9 +146,9 @@
 
         function formatItem(item) {
             return item.TicketId + ': ' + item.Subject + " - " + item.DateReported;
-        }
+        }*/
 
-    </script>
+            </script>
 
 </body>
 </html>

@@ -50,3 +50,4 @@ C:\Users\izubair\Source\Repos\TicketWebAPI\TicketWebAPI\bin\Microsoft.Owin.Secur
 C:\Users\izubair\Source\Repos\TicketWebAPI\TicketWebAPI\bin\Microsoft.Owin.Security.OAuth.xml
 C:\Users\izubair\Source\Repos\TicketWebAPI\TicketWebAPI\bin\System.Diagnostics.DiagnosticSource.xml
 C:\Users\izubair\Source\Repos\TicketWebAPI\TicketWebAPI\bin\System.Web.Http.Owin.xml
+C:\Users\izubair\Source\Repos\TicketWebAPI\TicketWebAPI\obj\Debug\TicketWebAPI.csprojResolveAssemblyReference.cache

@@ -1504,6 +1504,7 @@ function SubmitReplyClick() {
             //alert("AJAX success!");
             if (data === "OK") {
                 window.location.href = url;
+                
             }
             else {
                 alert("Something went wrong in call to api/FileUpload/SaveTicReply");

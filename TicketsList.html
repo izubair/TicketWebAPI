@@ -9,12 +9,15 @@
   <link rel="shortcut icon" href="assets/images/mbr-1620x1080.jpg" type="image/x-icon">
   <meta name="description" content="Site Maker Description">
   <title>TicketsList</title>
+
+   
     <link rel="stylesheet" href="assets/web/assets/mobirise-icons/mobirise-icons.css">
     <link rel="stylesheet" href="assets/tether/tether.min.css">
     <link rel="stylesheet" href="assets/socicon/css/styles.css">
     <link rel="stylesheet" href="assets/dropdown/css/style.css">
     <link rel="stylesheet" href="assets/theme/css/style.css">
     <link rel="stylesheet" href="assets/mobirise/css/mbr-additional.css" type="text/css">
+    
 
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
 
@@ -33,10 +36,10 @@
 
    
 </head>
-<body>
+<body onpageshow="myFunction()">
     <!-- Modal -->
     <div class="modal fade" id="myModal" role="dialog">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
@@ -45,6 +48,7 @@
                     <h4 id="ticketID" class="modal-title">TicketID</h4>
                 </div>
                 <div class="modal-body">
+                <!--
                     <p>Ticket details</p>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -89,24 +93,29 @@
                     <div class="row">
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                             <label><b>Replies: </b></label>
-                            <ul id="repliesList">
-                                <li>
-                                    <label>No Replies</label>
-                                </li>
-                            </ul>
+                            
 
                         </div>
                         <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
                             <a href="ReplyInput.html?Mode=1" class="right-btn">Reply...</a>
                         </div>
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                            <ul id="repliesList">
+                                <li>
+                                    <label>No Replies</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>  
+            -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
 
+            </div>
         </div>
     </div>
     <!--End Modal-->
@@ -135,56 +144,38 @@
         </div><!-- /.container-fluid -->
     </nav>
 
-<section class="section-table cid-qEbtNj9Ayd" id="table1-d" data-rv-view="1081">
 
-  
+<section class="section-table cid-qEbtNj9Ayd" id="table1-d" data-rv-view="1081">
   
   <div class="container container-table">
-      <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Citizen Requests</h2>      
+      <h2 class="mbr-section-title mbr-fonts-style align-center display-2">Citizen Requests</h2>      
       <div class="table-wrapper">
         <div class="container">
           <div class="row search">
             <div class="col-md-6"></div>
-            <!--
-            <div class="col-md-6">
-                <div class="dataTables_filter">
-                  <label class="searchInfo mbr-fonts-style display-7">Search:</label>
-                  <input class="form-control input-sm" disabled="">
-                </div>
-            </div>
-            -->
+          
           </div>
         </div>
 
-        <div class="container scroll">
-        <!--
-          <table id="tblTickets" class="table isSearch" cellspacing="0">
-        -->
+        <div class="container scroll" style="padding-bottom: 60px;">
+       
             <table id="tblTickets" class="table" cellspacing="0">
                 <thead>
                     <tr class="table-heads">
 
-                        <th class="head-item mbr-fonts-style display-7">TICKETS</th>
-                        <!--                        
-                        <th class="head-item mbr-fonts-style display-7">SUBJECT</th>
-                        <th class="head-item mbr-fonts-style display-7">DATE REPORTED</th>
-                        <th class="head-item mbr-fonts-style display-7">ISSUE</th>
-                        -->
+                        <th class="head-item mbr-fonts-style display-15">TICKETS</th>
+                       
                     </tr>
                 </thead>
-                <tbody id="tblBody">
+                <tbody id="tblBody"> <!--Note: Tabel Body is filled in javascript below at the end so change CSS there -->
                     <tr>
-                        <td class="body-item mbr-fonts-style display-7">
+                        <td class="body-item mbr-fonts-style display-12">
                         <label id="ticID">Schmal</label> 
                         <label id="ticSubject">Jeanna Schmal</label> 
                         <label id="ticDate">Schmal</label>
                         <label id="ticIssue">Schmal</label>
                         </td>
-                        <!--
-                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
-                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
-                        <td class="body-item mbr-fonts-style display-7">Jeanna Schmal</td>
-                        -->
+                        
                     </tr>
                 </tbody>
             </table>
@@ -193,7 +184,7 @@
           <div id="tblInfo" class="container table-info-container">
               <div class="row info">
                   <div class="col-md-6">
-                      <div class="dataTables_info mbr-fonts-style display-7">
+                      <div class="dataTables_info">
                           <span class="infoBefore">Showing</span>                         
                           <span id="spanInfoRows"></span>                         
                           <span class="infoAfter">entries</span>
@@ -211,7 +202,11 @@
       
            
     </div>
+
 </section>
+
+
+    
 
     <footer class="navbar-default navbar-fixed-bottom footer">
 
@@ -248,7 +243,7 @@
             if (localStorage) {
                 selTicketID = localStorage.getItem('TicketsList_TicID');
             }
-            if (selTicketID != null && selTicketID != 0)
+            if (selTicketID != null && selTicketID > 0)
             {
                 FillTicDataAndShow(selTicketID);
             }
@@ -267,6 +262,10 @@
                     localStorage.setItem('TicketsList_TicID', id);
                 }
 
+                $('.modal-body').load('TicketDetail.html', function () {
+                    $('#myModal').modal({ show: true });
+                });
+
                 FillTicDataAndShow(id);
 
                     // Also get attachments
@@ -275,29 +274,7 @@
                 
             });
 
-            function FillTicDataAndShow(ticID) {
-                $.getJSON('api/Tickets/GetTicket' + '/' + ticID)
-                    .done(function (data) {
-                        //$('#ticket').text(formatItem(data));
-
-                        $('#ticketID').text('Ticket ID: ' + data.TicketId);
-
-                        $('#ticketSubject').text(data.Subject);
-                        $('#ticketDesc').text(data.Description);
-                        $('#ticketIssue').text(data.IssueId);
-                        $('#ticketDate').text(data.DateReported);
-
-                        // Now get attachments and GetAttachmetns will show the modal dialog
-                        GetAttachments(ticID);
-
-                        // Now show modal dialog
-                        //$("#myModal").modal();
-                    })
-                    .fail(function (jqXHR, textStatus, err) {
-                        $('#ticket').text('Error: ' + err);
-                    });
-            }
-
+            
            // Send an AJAX request
            $.getJSON(uri)
                .done(function (data) {
@@ -318,7 +295,7 @@
 
            function formatItem(item) {
                //var markup = "<tr><td class='body-item mbr-fonts - style display-7'>" + item.TicketId + "</td><td class='body- item mbr- fonts - style display-7'>" + item.Subject + "</td><td class='body-item mbr-fonts - style display-7'>" + item.DateReported + "</td><td class='body-item mbr-fonts - style display-7'>" + item.IssueId + "</td></tr>";
-               var markup = "<tr><td class='body-item mbr-fonts - style display-7'>" +
+               var markup = "<tr><td class='body-item mbr-fonts - style display-12'>" +
                    "<label style='color:blue'>" + "TICKET ID: " + "</label>" +
                    "<label class='lbl'>" + item.TicketId + "</label>" +
                    "</br>" +
@@ -334,21 +311,44 @@
                $("table tbody").append(markup);               
            }
 
+           function FillTicDataAndShow(ticID) {
+               $.getJSON('api/Tickets/GetTicket' + '/' + ticID)
+                   .done(function (data) {
+                       //$('#ticket').text(formatItem(data));
+
+                       $('#ticketID').text('Ticket ID: ' + data.TicketId);
+
+                       $('#ticketSubject').text(data.Subject);
+                       $('#ticketDesc').text(data.Description);
+                       $('#ticketIssue').text(data.IssueId);
+                       $('#ticketDate').text(data.DateReported);
+
+                       // Now get attachments and GetAttachmetns will show the modal dialog
+                       GetAttachments(ticID);
+
+                       // Now show modal dialog
+                       //$("#myModal").modal();
+                   })
+                   .fail(function (jqXHR, textStatus, err) {
+                       $('#ticket').text('Error: ' + err);
+                   });
+           }
+
            function GetAttachments(ticID) {
                // <li><a href="#" id="linkLogOut" onclick="btnLogoutClick()">Logout</a></li>
-              
 
-            var uTicketData = {
-            TicketId: ticID,
-            Subject: "",
-            ConstituentID: "",
-            Service: 0,
-            IssueId: 0,
-            IssueDetailId: 0,
-            IssueAddInfoId: 0,
-            Description: "",
-            DateReported: ""
-        };
+
+               var uTicketData = {
+                   TicketId: ticID,
+                   Subject: "",
+                   ConstituentID: "",
+                   Service: 0,
+                   IssueId: 0,
+                   IssueDetailId: 0,
+                   IssueAddInfoId: 0,
+                   Description: "",
+                   DateReported: ""
+               };
                $.ajax({
                    url: 'api/Tickets/GetTicAttachments',
                    type: 'POST',
@@ -358,10 +358,26 @@
                    success: function (data) {
                        //alert("AJAX success!");
                        $("#filesList").html("");
-                       for (i = 0; i < data.length; i++) {
-                           liHtml = '<li><a href="' + 'UploadedFiles/' + data[i].fileName + '" target="_blank">' + data[i].fileName + '</a></li>';
+                       if (data.length <= 0) {
+                           liHtml = '<li>' + "No Attachments" + '</li>';
 
                            $("#filesList").append(liHtml);
+                       }
+                       else {
+                           if (data.length < 4)
+                           {                               
+                               $("#attachDiv").css("height", "100%");                               
+                           }
+                           else
+                           {
+                               $("#attachDiv").css("height", "100px");
+                           }
+
+                           for (i = 0; i < data.length; i++) {
+                               liHtml = '<li><a href="' + 'UploadedFiles/' + data[i].fileName + '" target="_blank">' + data[i].fileName + '</a></li>';
+
+                               $("#filesList").append(liHtml);
+                           }
                        }
 
                        // Also get ticket replies
@@ -372,7 +388,7 @@
                        alert("Something went wrong, please try again" + JSON.stringify(xhr));
 
                    }
-               });              
+               });
 
            }
 
@@ -400,14 +416,30 @@
                    success: function (data) {
                        //alert("AJAX success!");
                        $("#repliesList").html("");
-                       for (i = 0; i < data.length; i++) {
-                           liHtml = '<li>' +  data[i].ReplyText +  '</li>';
+                       if (data.length <= 0) {
+                           liHtml = '<li>' + "No Replies" + '</li>';
 
                            $("#repliesList").append(liHtml);
                        }
+                       else {
+                           if (data.length < 4) {
+                               $("#replyDiv").css("height", "100%");                               
+                           }
+                           else
+                           {
+                               $("#replyDiv").css("height", "100px");    
+                           }
+
+                           for (i = 0; i < data.length; i++) {
+                               liHtml = '<li>' + data[i].ReplyText + '</li>';
+
+                               $("#repliesList").append(liHtml);
+                           }
+                       }
+
 
                        // Now show modal dialog
-                       $("#myModal").modal();
+                       //$("#myModal").modal();
                    },
                    error: function (xhr) {
 
@@ -419,9 +451,30 @@
            }
 
            
+
+           
         });      
 
+        function myFunction() {            
+            var urlParams = new URLSearchParams(window.location.search);
+            funcMode = urlParams.get('Mode');
+            if (funcMode != 1) {
+                if (localStorage) {
+                    localStorage.setItem('TicketsList_TicID', '0');
+                }
+            }
 
+            if (localStorage) {
+                selTicketID = localStorage.getItem('TicketsList_TicID');
+            }
+            if (selTicketID != null && selTicketID > 0) {
+                $('.modal-body').load('TicketDetail.html', function () {
+                    $('#myModal').modal({ show: true });
+                });
+                FillTicDataAndShow(selTicketID);
+            }
+            
+        }
     </script>
 
   
